@@ -1,3 +1,4 @@
+#pragma once
 #ifndef INGREDIENTE_H
 #define INGREDIENTE_H
 

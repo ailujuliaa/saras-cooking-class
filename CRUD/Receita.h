@@ -4,34 +4,35 @@
 #include <string>
 #include <vector>
 #include "Ingrediente.h"
+#include "EtapasDePreparo.h"
 
 using namespace std;
 
-class Receita
-{
+class Receita {
 protected:
 	int id;
 	string nome;
 	string categoria;
-	string modoPreparo;
+	vector<etapaPreparo*> etapas;
 	int tempoPreparo;
 	vector<Ingrediente> ingrediente;
+	string metodos_cozinha;
+	
 
 public:
-	Receita():id(0), nome(""), categoria(""), modoPreparo(""), tempoPreparo(0) {
+	Receita():id(0), nome(""), categoria(""), tempoPreparo(0) {
 
 	}
 
 	Receita(int id, string nome, string categoria, string modoPreparo, int tempoPreparo)
-		: id(id), nome(nome), categoria(categoria), modoPreparo(modoPreparo), tempoPreparo(tempoPreparo) {
+		: id(id), nome(nome), categoria(categoria), tempoPreparo(tempoPreparo) {
 
 		}
 
 	virtual ~Receita() {
-
 	}
 
-	int getId() const { 
+	int getId() const{ 
 		return id; 
 	}
 	void setId(int id) { 
@@ -52,12 +53,7 @@ public:
 		 this->categoria = categoria; 
 		}
 
-	string getModoPreparo() const { 
-		return modoPreparo; 
-	}
-	void setModoPreparo(string modoPreparo) { 
-		this->modoPreparo = modoPreparo; 
-	}
+
 
 	int getTempoPreparo() const { 
 		return tempoPreparo; 
@@ -74,6 +70,10 @@ public:
 		ingrediente.push_back(novoIngrediente);
 	}
 
+	void adicionarEtapa(etapaPreparo* novaEtapa) {
+        etapas.push_back(novaEtapa);
+	}
+
 	bool removerIngrediente(int idIngrediente) {
 		for (size_t i = 0; i < ingrediente.size(); i++) {
 			if (ingrediente[i].getId() == idIngrediente) {
@@ -83,7 +83,7 @@ public:
 		}
 		return false;
 	}
-
+	
 	virtual int calcularTempo() = 0;
 };
-#endif
+#endif;

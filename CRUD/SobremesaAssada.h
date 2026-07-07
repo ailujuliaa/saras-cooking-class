@@ -6,30 +6,26 @@
 class SobremesaAssada : public Receita
 {
 private:
-	int temperaturaForno;
 	int tempoForno;
+	int temperaturaForno;
+	string tamanhoForma;
 
 public:
-	SobremesaAssada(): Receita(), temperaturaForno(0), tempoForno(0) {
 
+	SobremesaAssada(): Receita(), tamanhoForma("20cm x 20cm") {
+	
 		}
 
-	SobremesaAssada(int id, string nome, string categoria, string modoPreparo, int tempoPreparo, int temperaturaForno, int tempoForno)
-		: Receita(id, nome, categoria, modoPreparo, tempoPreparo), temperaturaForno(temperaturaForno), tempoForno(tempoForno) {}
 
-	int getTemperaturaForno() const { 
-		return temperaturaForno; 
-	}
-	void setTemperaturaForno(int temperaturaForno) { 
-		this->temperaturaForno = temperaturaForno; 
-	}
+	SobremesaAssada(int id, string nome, string categoria, string modoPreparo, int tempoPreparo, string tamanhoForma, int tempoAssar, int temperaturaForno)
+		: Receita(), tamanhoForma(tamanhoForma), temperaturaForno(temperaturaForno), tempoForno(tempoForno) {
+			setId(id);
+			setNome(nome);
+			setCategoria(categoria);
+		    setTempoPreparo(tempoPreparo);
+		}
 
-	int getTempoForno() const { 
-		return tempoForno; 
-	}
-	void setTempoForno(int tempoForno) { 
-		this->tempoForno = tempoForno; 
-	}
+	
 
 	int calcularTempo() override {
 		return tempoPreparo + tempoForno;

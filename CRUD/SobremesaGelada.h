@@ -7,19 +7,29 @@ class SobremesaGelada : public Receita
 {
 private:
 	bool precisaMaquinaDeSorvete;
+	bool precisaRefrigerar;
 	int tempoCongelamento;
 
 public:
-	SobremesaGelada() : Receita(), precisaMaquinaDeSorvete(false), tempoCongelamento(0) {
+	SobremesaGelada() : Receita(), precisaMaquinaDeSorvete(false), precisaRefrigerar(false), tempoCongelamento(0) {
 
 	}
 
-	SobremesaGelada(int id, string nome, string categoria, string modoPreparo, int tempoPreparo, bool precisaMaquinaDeSorvete, int tempoCongelamento)
+	SobremesaGelada(int id, string nome, string categoria, string modoPreparo, int tempoPreparo, bool precisaMaquinaDeSorvete, bool precisaRefrigerar, int tempoCongelamento)
 		: Receita(id, nome, categoria, modoPreparo, tempoPreparo),
 		  precisaMaquinaDeSorvete(precisaMaquinaDeSorvete),
+		  precisaRefrigerar(precisaRefrigerar),
 		  tempoCongelamento(tempoCongelamento) {
 
 		  }
+
+	bool getPrecisaRefrigerar() const {
+		 return precisaRefrigerar; 
+		}	
+
+	void setPrecisaRefrigerar(bool precisaRefrigerar) {
+		 this->precisaRefrigerar = precisaRefrigerar; 
+		}
 
 	bool getPrecisaMaquinaDeSorvete() const {
 		 return precisaMaquinaDeSorvete; 
