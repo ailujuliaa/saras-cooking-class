@@ -15,7 +15,7 @@ public:
 		
 	}
 
-	ReceitaMista(int id, string nome, string categoria, int tempoPreparo, int temperaturaForno, int tempoForno, int tempoCongelamento) : Receita(id, nome, categoria, tempoPreparo), temperaturaForno(temperaturaForno), tempoForno(tempoForno), tempoCongelamento(tempoCongelamento) {
+	ReceitaMista(int id, string nome, int tempoPreparo, int temperaturaForno, int tempoForno, int tempoCongelamento) : Receita(id, nome, tempoPreparo), temperaturaForno(temperaturaForno), tempoForno(tempoForno), tempoCongelamento(tempoCongelamento) {
 
 		}
 
@@ -43,5 +43,8 @@ public:
 	int calcularTempo() override {
 		return tempoPreparo + tempoForno + tempoCongelamento + calcularTempoComponentes();
 	}
+	string getTipo() const override {
+        return "Mista";
+    }
 };
 #endif

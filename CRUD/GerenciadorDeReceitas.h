@@ -14,26 +14,38 @@ class GerenciadorDeReceitas
 {
 private:
 	string caminhoArquivo;
+	vector<shared_ptr<Receita>> receitas;
 
 public:
 	bool criarReceita(shared_ptr<Receita> receita) {
-		return false; 
+		receitas.push_back(receita);
+		return true;
 	}
 
 	shared_ptr<Receita> buscarPorId(int id) {
-		return nullptr;
+		for (int i = 0; i < receitas.size(); i++) {
+        if (receitas[i]->getId() == id) {
+            return receitas[i];
+        }
+    }
+    return nullptr;
 	}
 
 	shared_ptr<Receita> buscarPorNome(string nome) {
-		return nullptr; 
+		for (int i = 0; i < receitas.size(); i++) {
+			if (receitas[i]->getNome() == nome) {
+				return receitas[i];
+			}
+		}
+    return nullptr;
 	}
 
 	vector<shared_ptr<Receita>> listarTodas() {
-		return vector<shared_ptr<Receita>>(); 
+		return receitas; 
 	}
 
-	vector<shared_ptr<Receita>> listarPorCategoria(string categoria) {
-		return vector<shared_ptr<Receita>>(); 
+	vector<shared_ptr<Receita>> listarPorTipo(string tipo) {
+		return receitas;
 	}
 
 	bool atualizarReceita(int id, shared_ptr<Receita> receita) {
