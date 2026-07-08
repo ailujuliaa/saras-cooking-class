@@ -53,24 +53,50 @@ public:
     return resultado;
 	}
 
-	bool atualizarReceita(int id, shared_ptr<Receita> receita) {
-		return false; 
+	bool atualizarReceita(int id, shared_ptr<Receita> novaReceita) {
+		shared_ptr<Receita> receita = buscarPorId(id);
+		if (receita == nullptr) return false;
+		
+		receita->setNome(novaReceita->getNome());
+		receita->setTempoPreparo(novaReceita->getTempoPreparo());
+		return true;
+
 	}
 
 	bool adicionarIngrediente(int idReceita, Ingrediente ingrediente) {
-		return false; 
+		shared_ptr<Receita> receita = buscarPorId(idReceita);
+		if (receita == nullptr) return false;
+
+		receita->adicionarIngrediente(ingrediente); 
+		return true;
+
 	}
 
 	bool removerIngrediente(int idReceita, int idIngrediente) {
-		return false; 
+		shared_ptr<Receita> receita = buscarPorId(idReceita);
+		if (receita == nullptr) return false;
+
+		receita->removerIngrediente(idIngrediente);
+		return true;
 	}
 
-	bool removerReceita(int id) {
-		return false; 
+	bool removerReceita(int idReceita) { //ta com erros!!
+		shared_ptr<Receita> receita = buscarPorId(idReceita);
+		if (receita == nullptr) return false;
+		
+		for (int i = 0; i < receitas.size(); i++) {
+			if (receitas[i] == receita) {
+				receitas.erase(receitas.begin() + i);
+				return true;
+			}
+		}
 	}
 
 	bool adicionarEtapa(int idReceita, Etapa etapa){
-		return false;
+		shared_ptr<Receita> receita = buscarPorId(idReceita);
+		if (receita == nullptr) return false;
+
+		receita->adicionarEtapa(etapa);
 	}
 
 	bool adicionarComponente(int idReceitaPrincipal, int idReceitaComponente) {
