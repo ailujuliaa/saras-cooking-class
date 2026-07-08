@@ -14,7 +14,7 @@ public:
 
 	}
 
-	ReceitaForno(int id, string nome, string categoria, int tempoPreparo, int temperaturaForno, int tempoForno)	: Receita(id, nome, categoria, tempoPreparo), temperaturaForno(temperaturaForno), tempoForno(tempoForno) {
+	ReceitaForno(int id, string nome, int tempoPreparo, int temperaturaForno, int tempoForno)	: Receita(id, nome, tempoPreparo), temperaturaForno(temperaturaForno), tempoForno(tempoForno) {
 
 	}
 
@@ -35,5 +35,8 @@ public:
 	int calcularTempo() override {
 		return tempoPreparo + tempoForno + calcularTempoComponentes();
 	}
+	string getTipo() const override {
+        return "Forno";
+    }
 };
 #endif
