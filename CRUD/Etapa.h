@@ -2,6 +2,7 @@
 #define ETAPA_H
 
 #include <string>
+#include <iostream>
 
 using namespace std;
 
@@ -32,7 +33,9 @@ public:
         return tempo; 
     }
 	void setTempo(int tempo) { 
-        this->tempo = tempo; 
+        if (tempo > 0)
+            this->tempo = tempo; 
+        else cout << "Tempo Inválido" << endl;
     }
 
 	string getRecipiente() const { 
