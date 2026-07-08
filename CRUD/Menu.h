@@ -6,6 +6,7 @@
 #include <memory>
 #include "GerenciadorDeReceitas.h"
 #include "Receita.h"
+#include "Etapa.h"
 
 using namespace std;
 
@@ -41,6 +42,14 @@ public:
 
 	void exibirListaReceitas(vector<shared_ptr<Receita>> receitas) {
 		
+	}
+
+	vector<string> listarAcoes(){
+		return vector<string>();
+	}
+
+	Etapa perguntarEtapa(){
+		return Etapa();
 	}
 
 	int lerOpcao() {

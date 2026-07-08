@@ -4,16 +4,16 @@
 #include <string>
 #include <vector>
 #include <memory>
-#include "RepositorioReceitas.h"
 #include "Receita.h"
 #include "Ingrediente.h"
+#include "Etapa.h"
 
 using namespace std;
 
 class GerenciadorDeReceitas
 {
 private:
-	RepositorioReceitas repositorioReceitas;
+	string caminhoArquivo;
 
 public:
 	bool criarReceita(shared_ptr<Receita> receita) {
@@ -50,6 +50,14 @@ public:
 
 	bool removerReceita(int id) {
 		return false; 
+	}
+
+	bool adicionarEtapa(int idReceita, Etapa etapa){
+		return false;
+	}
+
+	bool adicionarComponente(int idReceitaPrincipal, int idReceitaComponente) {
+		return false; // idReceitaComponente != idReceitaPrincipal e o componente n pode criar ciclo (A usa B que usa A)
 	}
 
 	int gerarProximoId() {
