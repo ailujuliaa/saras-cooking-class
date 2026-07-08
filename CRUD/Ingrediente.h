@@ -15,13 +15,10 @@ private:
 
 public:
 	Ingrediente():id(0), nome(""), quantidade(0.0f), unidade("") {
-
 	}
 
-	Ingrediente(int id, string nome, float quantidade, string unidade)
-		: id(id), nome(nome), quantidade(quantidade), unidade(unidade) {
-
-		}
+	Ingrediente(int id, string nome, float quantidade, string unidade) : id(id), nome(nome), quantidade(quantidade), unidade(unidade) {
+	}
 
 	int getId() const { 
 		return id; 

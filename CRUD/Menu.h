@@ -17,7 +17,7 @@ private:
 
 public:
 	void exibirMenuPrincipal() {
-		
+		cout;
 	}
 
 	void exibirMenuCadastro() {
@@ -53,6 +53,8 @@ public:
 	}
 
 	int lerOpcao() {
+		int opc;
+		cin >> opc;
 		return 0;
 	}
 };
