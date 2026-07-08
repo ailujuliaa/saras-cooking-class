@@ -45,7 +45,12 @@ public:
 	}
 
 	vector<shared_ptr<Receita>> listarPorTipo(string tipo) {
-		return receitas;
+		vector<shared_ptr<Receita>> resultado;
+		for (int i = 0; i < receitas.size(); i++) {
+			if (receitas[i]->getTipo() == tipo) 
+				resultado.push_back(receitas[i]);
+		}
+    return resultado;
 	}
 
 	bool atualizarReceita(int id, shared_ptr<Receita> receita) {
