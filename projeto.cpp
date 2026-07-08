@@ -18,19 +18,19 @@ int main() {
         
         switch (name) {
             case '1':
-                system.criar();
+                criar();
                 break;
             case '2':
-                system.ler();
+                ler();
                 break;
             case '3':
-                system.atualizar();
+                atualizar();
                 break;
             case '4':
-                system.procurar();
+                procurar();
                 break;
             case '5':
-                system.excluir();
+                excluir();
                 break;
             case '6':
                 cout << "Saindo..." << endl;
