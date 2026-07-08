@@ -3,7 +3,10 @@
 
 #include <string>
 #include <vector>
+#include <memory> 
+
 #include "Ingrediente.h"
+#include "Etapa.h"
 
 using namespace std;
 
@@ -13,17 +16,17 @@ protected:
 	int id;
 	string nome;
 	string categoria;
-	string modoPreparo;
 	int tempoPreparo;
 	vector<Ingrediente> ingrediente;
+	vector<Etapa> etapa;
+	vector<shared_ptr<Receita>> componentes;
 
 public:
-	Receita():id(0), nome(""), categoria(""), modoPreparo(""), tempoPreparo(0) {
+	Receita():id(0), nome(""), categoria(""), tempoPreparo(0) {
 
 	}
 
-	Receita(int id, string nome, string categoria, string modoPreparo, int tempoPreparo)
-		: id(id), nome(nome), categoria(categoria), modoPreparo(modoPreparo), tempoPreparo(tempoPreparo) {
+	Receita(int id, string nome, string categoria, int tempoPreparo) : id(id), nome(nome), categoria(categoria), tempoPreparo(tempoPreparo) {
 
 		}
 
@@ -52,13 +55,6 @@ public:
 		 this->categoria = categoria; 
 		}
 
-	string getModoPreparo() const { 
-		return modoPreparo; 
-	}
-	void setModoPreparo(string modoPreparo) { 
-		this->modoPreparo = modoPreparo; 
-	}
-
 	int getTempoPreparo() const { 
 		return tempoPreparo; 
 	}
@@ -82,6 +78,30 @@ public:
 			}
 		}
 		return false;
+	}
+
+	vector<Etapa>& getEtapas() { 
+		return etapa; 
+	}
+ 
+	void adicionarEtapa(Etapa novaEtapa) {
+		etapa.push_back(novaEtapa);
+	}
+ 
+	vector<shared_ptr<Receita>>& getComponentes() { 
+		return componentes; 
+	}
+ 
+	void adicionarComponente(shared_ptr<Receita> componente) {
+		componentes.push_back(componente);
+	}
+
+	int calcularTempoComponentes() const {
+		int total = 0;
+		for (size_t i = 0; i < componentes.size(); i++) {
+			total += componentes[i]->calcularTempo();
+		}
+		return total;
 	}
 
 	virtual int calcularTempo() = 0;
