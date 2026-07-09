@@ -10,12 +10,10 @@ private:
 
 public:
 	ReceitaGelada() : Receita(), tempoCongelamento(0) {
-
 	}
 
-	ReceitaGelada(int id, string nome, string categoria, int tempoPreparo, int tempoCongelamento) : Receita(id, nome, categoria, tempoPreparo), tempoCongelamento(tempoCongelamento) {
-
-		}
+	ReceitaGelada(int id, string nome, int tempoPreparo, int tempoCongelamento) : Receita(id, nome, tempoPreparo), tempoCongelamento(tempoCongelamento) {
+	}
 
 	int getTempoCongelamento() const { 
 		return tempoCongelamento; 
@@ -27,5 +25,9 @@ public:
 	int calcularTempo() override {
 		return tempoPreparo + tempoCongelamento + calcularTempoComponentes();
 	}
+
+	string getTipo() const override {
+        return "Gelada";
+    }
 };
 #endif

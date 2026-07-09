@@ -14,18 +14,17 @@ class Receita {
 protected:
 	int id;
 	string nome;
-	string categoria;
 	int tempoPreparo;
 	vector<Ingrediente> ingrediente;
 	vector<Etapa> etapa;
 	vector<shared_ptr<Receita>> componentes;
 
 public:
-	Receita():id(0), nome(""), categoria(""), tempoPreparo(0) {
+	Receita():id(0), nome(""), tempoPreparo(0) {
 
 	}
 
-	Receita(int id, string nome, string categoria, int tempoPreparo) : id(id), nome(nome), categoria(categoria), tempoPreparo(tempoPreparo) {
+	Receita(int id, string nome, int tempoPreparo) : id(id), nome(nome), tempoPreparo(tempoPreparo) {
 
 		}
 
@@ -45,13 +44,6 @@ public:
 	void setNome(string nome) { 
 		this->nome = nome; 
 	}
-
-	string getCategoria() const { 
-		return categoria; 
-	}
-	void setCategoria(string categoria) {
-		 this->categoria = categoria; 
-		}
 
 	int getTempoPreparo() const { 
 		return tempoPreparo; 
@@ -107,5 +99,6 @@ public:
 	}
 
 	virtual int calcularTempo() = 0;
+	virtual string getTipo() const = 0;
 };
 #endif;
