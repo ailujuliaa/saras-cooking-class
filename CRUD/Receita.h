@@ -12,7 +12,7 @@ using namespace std;
 
 class Receita {
 protected:
-	int id;
+	static int id;
 	string nome;
 	int tempoPreparo;
 	vector<Ingrediente> ingrediente;
@@ -24,19 +24,21 @@ public:
 
 	}
 
-	Receita(int id, string nome, int tempoPreparo) : id(id), nome(nome), tempoPreparo(tempoPreparo) {
+	Receita(string nome, int tempoPreparo) : nome(nome), tempoPreparo(tempoPreparo) {
 
 		}
 
 	virtual ~Receita() {
 	}
 
+	void setId(int id) {
+		this->id = id++;
+	}
+
 	int getId() const{ 
 		return id; 
 	}
-	void setId(int id) { 
-		this->id = id; 
-	}
+
 
 	string getNome() const { 
 		return nome; 
@@ -56,13 +58,12 @@ public:
 		return ingrediente; 
 	}
 
+	
+
 	void adicionarIngrediente(Ingrediente novoIngrediente) {
 		ingrediente.push_back(novoIngrediente);
 	}
 
-	void adicionarEtapa(etapaPreparo* novaEtapa) {
-        etapas.push_back(novaEtapa);
-	}
 
 	bool removerIngrediente(int idIngrediente) {
 		for (size_t i = 0; i < ingrediente.size(); i++) {

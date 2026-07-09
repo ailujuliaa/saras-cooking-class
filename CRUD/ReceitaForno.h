@@ -14,7 +14,7 @@ public:
 
 	}
 
-	ReceitaForno(int id, string nome, int tempoPreparo, int temperaturaForno, int tempoForno)	: Receita(id, nome, tempoPreparo), temperaturaForno(temperaturaForno), tempoForno(tempoForno) {
+	ReceitaForno (string nome, int tempoPreparo, int temperaturaForno, int tempoForno)	: Receita (nome, tempoPreparo), temperaturaForno(temperaturaForno), tempoForno(tempoForno) {
 
 	}
 

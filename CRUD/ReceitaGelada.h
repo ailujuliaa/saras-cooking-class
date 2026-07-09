@@ -12,7 +12,7 @@ public:
 	ReceitaGelada() : Receita(), tempoCongelamento(0) {
 	}
 
-	ReceitaGelada(int id, string nome, int tempoPreparo, int tempoCongelamento) : Receita(id, nome, tempoPreparo), tempoCongelamento(tempoCongelamento) {
+	ReceitaGelada(string nome, int tempoPreparo, int tempoCongelamento) : Receita(nome, tempoPreparo), tempoCongelamento(tempoCongelamento) {
 	}
 
 	int getTempoCongelamento() const { 
