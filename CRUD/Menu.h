@@ -167,11 +167,12 @@ public:
 		gerenciadorDeReceitas.criarReceita(a);
 		cout << "Receita cadastrada com sucesso!" << endl;
 
-		
+		adicionarIngredientesReceita(a->getNome());
+		adicionarEtapasReceita(a->getNome());
 	}
 
 	void exibirMenuLeitura() {
-
+		
 		
 	}
 
@@ -200,8 +201,50 @@ public:
 		return vector<string>();
 	}
 
+	void adicionarIngredientesReceita(string nomeReceita) {
+		char continuar;
+		do {
+			string nome, unidade;
+			float quantidade;
+
+			cout << "Nome do ingrediente: ";
+			cin >> nome;
+			cout << "Quantidade: ";
+			cin >> quantidade;
+			cout << "Unidade (g, ml, xícara...): ";
+			cin >> unidade;
+
+			Ingrediente ingrediente(0, nome, quantidade, unidade); // id é definido pelo gerenciador
+			gerenciadorDeReceitas.adicionarIngrediente(nomeReceita, ingrediente);
+
+			cout << "Adicionar outro ingrediente? (s/n): ";
+			cin >> continuar;
+		} while (continuar == 's' || continuar == 'S');
+	}
+
+	void adicionarEtapasReceita(string nomeReceita) {
+		char continuar;
+		do {
+			Etapa etapa = perguntarEtapa();
+			gerenciadorDeReceitas.adicionarEtapa(nomeReceita, etapa);
+
+			cout << "Adicionar outra etapa? (s/n): ";
+			cin >> continuar;
+		} while (continuar == 's' || continuar == 'S');
+	}
+
 	Etapa perguntarEtapa(){
-		return Etapa();
+		string acao, recipiente;
+		int tempo;
+
+		cout << "Ação da etapa (ex: misturar, assar): ";
+		cin >> acao;
+		cout << "Tempo da etapa (minutos): ";
+		cin >> tempo;
+		cout << "Recipiente utilizado: ";
+		cin >> recipiente;
+
+		return Etapa(acao, tempo, recipiente);
 	}
 
 };
