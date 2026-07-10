@@ -101,9 +101,9 @@ public:
 
 	virtual int calcularTempo() = 0;
 	virtual string getTipo() const = 0;
-	virtual string getIntensidade(0) = 0;
-	virtual int getTempo(0) = 0;
-	virtual int getTempoCongelamento(0) = 0;
+	virtual string getIntensidade() = 0;
+	virtual int getTempo() = 0;
+	virtual int getTempoCongelamento() = 0;
 	
 };
 #endif;
