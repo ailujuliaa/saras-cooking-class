@@ -1,10 +1,10 @@
 #ifndef ETAPA_H
 #define ETAPA_H
-
 #include <string>
-#include <iostream>
 
 using namespace std;
+
+
 
 class Etapa
 {
@@ -33,9 +33,7 @@ public:
         return tempo; 
     }
 	void setTempo(int tempo) { 
-        if (tempo > 0)
-            this->tempo = tempo; 
-        else cout << "Tempo Inválido" << endl;
+        this->tempo = tempo; 
     }
 
 	string getRecipiente() const { 
