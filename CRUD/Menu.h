@@ -7,10 +7,9 @@
 #include <memory>
 #include "GerenciadorDeReceitas.h"
 #include "Receita.h"
-#include "ReceitaForno.h"
+#include "ReceitaQuente.h"
 #include "ReceitaGelada.h"
 #include "ReceitaMista.h"
-#include "SobremesaDeFogao.h"
 #include "Etapa.h"
 
 using namespace std;
@@ -21,6 +20,9 @@ private:
 	GerenciadorDeReceitas gerenciadorDeReceitas;
 
 public:
+	Menu() {
+		gerenciadorDeReceitas.lerArquivo();
+	}
 	void exibirMenuPrincipal() {
 		int opcao;
 		cout << "Escolha uma opção: "
@@ -54,6 +56,7 @@ public:
 					exibirListaReceitas(gerenciadorDeReceitas.listarTodas());
 					break;
 				case 7:
+					gerenciadorDeReceitas.salvarArquivo();
 					cout << "Saindo..." << endl;
 					break;
 				default:
@@ -66,8 +69,8 @@ public:
 	void exibirMenuCadastro() {
 		Receita* a;
 		char opcao;
-		string nome;
-		int temperaturaForno, tempoForno, tempoCongelamento, tempoPreparo;
+		string intensidade, nome;
+		int tempoQuente = 0, opcoes, tempoCongelamento, tempoPreparo;
 
 		cout << "Qual é o tipo da receita?" << "1- Receita de Forno\n" 
 		<< "2- Receita de Geladeira\n" << "3- Receita Mista\n" 
@@ -82,12 +85,25 @@ public:
 			cin >> nome;
 			cout << "Digite o tempo de preparo: ";
 			cin >> tempoPreparo;
-			cout << "Digite a temperatura do forno: ";
-			cin >> temperaturaForno;
-			cout << "Digite o tempo do forno: ";
-			cin >> tempoForno;
+			cout << "1- Forno \n2- Fogão? ";
+			cin >> opcao;
+			if (opcao == '1') {
+				cout << "Digite a temperatura do forno: ";
+				cin >> intensidade;
+				cout << "Digite o tempo do forno: ";
+				cin >> tempoQuente;
 
-				a = new ReceitaForno(nome, tempoPreparo, temperaturaForno, tempoForno);
+			} else if (opcao == '2') {
+				cout << "Digite a intensidade do fogão: ";
+				cin >> intensidade;
+				cout << "Digite o tempo do fogão: ";
+				cin >> tempoQuente;
+
+			} else {
+				cout << "Opção inválida!" << endl;
+			}
+
+			a = new ReceitaQuente(nome, tempoPreparo, intensidade, tempoQuente);
 
 				break;
 				
@@ -103,33 +119,59 @@ public:
 				a = new ReceitaGelada(nome, tempoPreparo, tempoCongelamento);
 
 				break;
+			
 			case '3':
 
 				cout << "Digite o nome da receita: ";
-			cin >> nome;
-			cout << "Digite o tempo de preparo: ";
-			cin >> tempoPreparo;
-			cout << "Digite a temperatura do forno: ";
-			cin >> temperaturaForno;
-			cout << "Digite o tempo do forno: ";
-			cin >> tempoForno;
-			
-				break;
-			case '4':
-				// Criar sobremesa de fogão
-				break;
-			default:
-				cout << "Opção inválida!" << endl;
+				cin >> nome;
+				cout << "Digite o tempo de preparo: ";
+				cin >> tempoPreparo;
+				cout << "1- Forno \n2- Fogão \n3- Geladeira" << endl;
+			 
+				while (opcao == '1' && opcao == '2' && opcao != '3' && opcoes < 1)
+			 	{
+					cin >> opcao;
+					if (opcao == '1' && tempoQuente == 0) {
+					cout << "Digite a temperatura do forno: ";
+					cin >> intensidade;
+					cout << "Digite o tempo do forno: ";
+					cin >> tempoQuente;
+					opcoes++;
+					break;
+					} else if (opcao == '2' && tempoQuente == 0) {
+					cout << "Digite a intensidade do fogão: ";
+					cin >> intensidade;
+					cout << "Digite o tempo do fogão: ";
+					cin >> tempoQuente;
+					opcoes++;
+					break;
+					} else if (opcao == '3') {
+					cout << "Digite o tempo de congelamento: ";
+					cin >> tempoCongelamento;
+					opcoes++;
+					break;
+					} else {
+					cout << "Opção inválida!" << endl;
+					}
+				}
+
+				a = new ReceitaMista(nome, tempoPreparo, intensidade, tempoQuente, tempoCongelamento);
+					break;
+
+				default:
+					cout << "Opção inválida!" << endl;
 		}
 		
 	}
 
 	void exibirMenuLeitura() {
+
 		
 	}
 
 	void exibirMenuBusca() {
-		
+
+
 	}
 
 	void exibirMenuEdicao() {

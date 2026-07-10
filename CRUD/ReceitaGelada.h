@@ -15,7 +15,7 @@ public:
 	ReceitaGelada(string nome, int tempoPreparo, int tempoCongelamento) : Receita(nome, tempoPreparo), tempoCongelamento(tempoCongelamento) {
 	}
 
-	int getTempoCongelamento() const { 
+	int getTempoCongelamento() override { 
 		return tempoCongelamento; 
 	}
 	void setTempoCongelamento(int tempoCongelamento) { 

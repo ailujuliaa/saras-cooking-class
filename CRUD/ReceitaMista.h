@@ -6,34 +6,34 @@
 class ReceitaMista : public Receita
 {
 private:
-	int temperaturaForno;
-	int tempoForno;
+	string intensidade;
+	int tempo;
 	int tempoCongelamento;
 
 public:
-	ReceitaMista() : Receita(), temperaturaForno(0), tempoForno(0), tempoCongelamento(0) {
+	ReceitaMista() : Receita(), intensidade("0"), tempo(0), tempoCongelamento(0) {
 		
 	}
 
-	ReceitaMista(int id, string nome, int tempoPreparo, int temperaturaForno, int tempoForno, int tempoCongelamento) : Receita(id, nome, tempoPreparo), temperaturaForno(temperaturaForno), tempoForno(tempoForno), tempoCongelamento(tempoCongelamento) {
+	ReceitaMista(string nome, int tempoPreparo, int intensidade, int tempo, int tempoCongelamento) : Receita(nome, tempoPreparo), intensidade(intensidade), tempo(tempo), tempoCongelamento(tempoCongelamento) {
 
 		}
 
-	int getTemperaturaForno() const { 
-		return temperaturaForno; 
+	string getIntensidade() override { 
+		return intensidade; 
 	}
-	void setTemperaturaForno(int temperaturaForno) { 
-		this->temperaturaForno = temperaturaForno; 
-	}
-
-	int getTempoForno() const { 
-		return tempoForno; 
-	}
-	void setTempoForno(int tempoForno) { 
-		this->tempoForno = tempoForno; 
+	void setIntensidade(string intensidade) {
+		this->intensidade = intensidade; 
 	}
 
-	int getTempoCongelamento() const { 
+	int getTempo() override { 
+		return tempo; 
+	}
+	void setTempo(int tempo) { 
+		this->tempo = tempo; 
+	}
+
+	int getTempoCongelamento() override { 
 		return tempoCongelamento; 
 	}
 	void setTempoCongelamento(int tempoCongelamento) { 
@@ -41,7 +41,7 @@ public:
 	}
 
 	int calcularTempo() override {
-		return tempoPreparo + tempoForno + tempoCongelamento + calcularTempoComponentes();
+		return tempoPreparo + tempo + tempoCongelamento + calcularTempoComponentes();
 	}
 	string getTipo() const override {
         return "Mista";

@@ -20,7 +20,7 @@ protected:
 	vector<shared_ptr<Receita>> componentes;
 
 public:
-	Receita():id(0), nome(""), tempoPreparo(0) {
+	Receita(): nome(""), tempoPreparo(0) {
 
 	}
 
