@@ -2,9 +2,11 @@
 #include <string>
 #include "Receita.h"
 #include "Menu.h"
+#include "GerenciadorDeReceitas.h"
 
 int main (){
+    GerenciadorDeReceitas gerenciadorMain;
     Menu menu;
-    menu.exibirMenuPrincipal();
+    menu.exibirMenuPrincipal(gerenciadorMain);
 	return 0;
 }

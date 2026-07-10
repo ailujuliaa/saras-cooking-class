@@ -29,7 +29,7 @@ public:
 		cin.ignore(numeric_limits<streamsize>::max(), '\n');
 }
 	}
-	void exibirMenuPrincipal() {
+	void exibirMenuPrincipal(GerenciadorDeReceitas& gerenciador) {
 		int opcao;
 		do{
 		cout << "Escolha uma opção: "
@@ -45,7 +45,7 @@ public:
 
 			switch (opcao) {
 				case 1:
-					exibirMenuCadastro();
+					exibirMenuCadastro(gerenciador);
 					break;
 				case 2:
 					exibirMenuLeitura();
@@ -72,7 +72,7 @@ public:
 		} while (opcao != 7);
 	}
 
-	void exibirMenuCadastro() {
+	void exibirMenuCadastro(GerenciadorDeReceitas& gerenciador) {
 		char opcao;
 		string intensidade, nome;
 		int tempoQuente = 0, opcoes = 0, tempoCongelamento, tempoPreparo;
@@ -87,9 +87,9 @@ public:
 			cin >> nome;
 			cout << "Digite o tempo de preparo: ";
 			cin >> tempoPreparo;
-			adicionarIngredientesReceita(nome);
+			//adicionarIngredientesReceita(gerenciador, nome);
 			cout << "Quais etapas antecedem o aquecimento?";
-			adicionarEtapasReceita(a->getNome());
+			adicionarEtapasReceita(gerenciador, nome);
 			cout << "1- Forno \n2- Fogão? ";
 			cin >> opcao;
 			if (opcao == '1') {
@@ -109,7 +109,7 @@ public:
 			}
 
 			cout << "Quais são as etapas necessárias para finalizar a receita?" << endl;
-			adicionarEtapasReceita(a->getNome());
+			adicionarEtapasReceita(gerenciador, nome);
 
 			a = shared_ptr<Receita>(new ReceitaQuente(nome, tempoPreparo, intensidade, tempoQuente));
 
@@ -121,7 +121,7 @@ public:
 			cin >> nome;
 			cout << "Digite o tempo de preparo: ";
 			cin >> tempoPreparo;
-			adicionarIngredientesReceita(nome);
+			adicionarIngredientesReceita(gerenciador, nome);
 			cout << "Quais etapas antecedem o resfriamento?";
 			perguntarEtapa();
 			cout << "Digite o tempo de resfriamento: ";
@@ -178,8 +178,7 @@ public:
 		gerenciadorDeReceitas.criarReceita(a);
 		cout << "Receita cadastrada com sucesso!" << endl;
 
-		adicionarIngredientesReceita(a->getNome());
-		adicionarEtapasReceita(a->getNome());
+		
 	}
 
 	void exibirMenuLeitura() {
@@ -212,7 +211,7 @@ public:
 		return vector<string>();
 	}
 
-	void adicionarIngredientesReceita(string nomeReceita) {
+	void adicionarIngredientesReceita(GerenciadorDeReceitas& gerenciador, string nomeReceita) {
 		char continuar;
 		do {
 			string nome, unidade;
@@ -233,7 +232,7 @@ public:
 		} while (continuar == 's' || continuar == 'S');
 	}
 
-	void adicionarEtapasReceita(string nomeReceita) {
+	void adicionarEtapasReceita(GerenciadorDeReceitas& gerenciador, string nomeReceita) {
 		char continuar;
 		do {
 			Etapa etapa = perguntarEtapa();
