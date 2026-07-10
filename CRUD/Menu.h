@@ -89,6 +89,7 @@ public:
 			cin >> tempoPreparo;
 			adicionarIngredientesReceita(nome);
 			cout << "Quais etapas antecedem o aquecimento?";
+			adicionarEtapasReceita(a->getNome());
 			cout << "1- Forno \n2- Fogão? ";
 			cin >> opcao;
 			if (opcao == '1') {
@@ -108,7 +109,7 @@ public:
 			}
 
 			cout << "Quais são as etapas necessárias para finalizar a receita?" << endl;
-			perguntarEtapa();
+			adicionarEtapasReceita(a->getNome());
 
 			a = shared_ptr<Receita>(new ReceitaQuente(nome, tempoPreparo, intensidade, tempoQuente));
 
