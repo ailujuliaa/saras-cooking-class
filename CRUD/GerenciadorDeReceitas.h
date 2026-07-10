@@ -40,7 +40,7 @@ public:
 				arquivo << ";" << receitas[i]->getTempoCongelamento();
 			}
 			else if (tipo == "Mista") {
-				arquivo << ";" << receitas[i]->getIntesidade() << ";" << receitas[i]->getTempo() << ";" << receitas[i]->getTempoCongelamento();
+				arquivo << ";" << receitas[i]->getIntensidade() << ";" << receitas[i]->getTempo() << ";" << receitas[i]->getTempoCongelamento();
 			}
 
 			arquivo << "\n";
@@ -185,7 +185,7 @@ public:
 		principal->adicionarComponente(componente);
 		return true;
 	}
-	bool formaCiclo(shared_ptr<Receita> receita, int nomeAlvo) {
+	bool formaCiclo(shared_ptr<Receita> receita, string nomeAlvo) {
     vector<shared_ptr<Receita>>& componentes = receita->getComponentes();
     for (int i = 0; i < componentes.size(); i++) {
         if (componentes[i]->getNome() == nomeAlvo) return true;
