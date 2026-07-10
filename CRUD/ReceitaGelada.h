@@ -26,6 +26,14 @@ public:
 		return tempoPreparo + tempoCongelamento + calcularTempoComponentes();
 	}
 
+	string getIntensidade () override {
+		return "";
+	}
+
+	int getTempo () override {
+		return 0;
+	}
+
 	string getTipo() const override {
         return "Gelada";
     }

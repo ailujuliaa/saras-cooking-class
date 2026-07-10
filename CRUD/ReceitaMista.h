@@ -15,7 +15,7 @@ public:
 		
 	}
 
-	ReceitaMista(string nome, int tempoPreparo, int intensidade, int tempo, int tempoCongelamento) : Receita(nome, tempoPreparo), intensidade(intensidade), tempo(tempo), tempoCongelamento(tempoCongelamento) {
+	ReceitaMista(string nome, int tempoPreparo, string intensidade, int tempo, int tempoCongelamento) : Receita(nome, tempoPreparo), intensidade(intensidade), tempo(tempo), tempoCongelamento(tempoCongelamento) {
 
 		}
 

@@ -38,5 +38,8 @@ public:
 	string getTipo() const override {
         return "Quente";
     }
+	int getTempoCongelamento() override {
+		return 0;
+	}
 };
 #endif

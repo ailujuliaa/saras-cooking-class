@@ -18,6 +18,7 @@ class Menu
 {
 private:
 	GerenciadorDeReceitas gerenciadorDeReceitas;
+	Receita* a;
 
 public:
 	Menu() {
@@ -25,6 +26,7 @@ public:
 	}
 	void exibirMenuPrincipal() {
 		int opcao;
+		do {
 		cout << "Escolha uma opção: "
 			<< "1- Criar receita\n" 
 			<< "2- Ler receita\n" 
@@ -35,6 +37,7 @@ public:
 			<< "7- Sair" << endl;
 
 			cin >> opcao;
+
 
 			switch (opcao) {
 				case 1:
@@ -62,12 +65,13 @@ public:
 				default:
 					cout << "Opção inválida!" << endl;
 			}
+		} while (opcao != 7);
+		 
 	}
 
 
 
 	void exibirMenuCadastro() {
-		Receita* a;
 		char opcao;
 		string intensidade, nome;
 		int tempoQuente = 0, opcoes, tempoCongelamento, tempoPreparo;
@@ -128,7 +132,7 @@ public:
 				cin >> tempoPreparo;
 				cout << "1- Forno \n2- Fogão \n3- Geladeira" << endl;
 			 
-				while (opcao == '1' && opcao == '2' && opcao != '3' && opcoes < 1)
+				while ((opcao == '1' || opcao == '2' || opcao != '3') && opcoes < 1)
 			 	{
 					cin >> opcao;
 					if (opcao == '1' && tempoQuente == 0) {
@@ -165,7 +169,7 @@ public:
 	}
 
 	void exibirMenuLeitura() {
-
+		
 		
 	}
 
@@ -198,10 +202,5 @@ public:
 		return Etapa();
 	}
 
-	int lerOpcao() {
-		int opc;
-		cin >> opc;
-		return 0;
-	}
 };
 #endif

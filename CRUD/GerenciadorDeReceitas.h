@@ -23,7 +23,7 @@ public:
 
 	void salvarArquivo(){
 		fstream arquivo;
-		arquivo.open("caminhoReceitas.txt", ios_base::out);
+		arquivo.open("caminhoReceitas.txt", ios_base::in);
 		if (! arquivo.is_open()) {
 			cout << "Erro ao abrir arquivo." << endl;
 			return;
@@ -74,13 +74,13 @@ public:
 				getline(ss, intensidade, ';');
 				getline(ss, strTempo, ';');
 				int tempo = stoi(strTempo);
-				receita = new ReceitaQuente(nome, tempoPreparo, intensidade, tempo);
+				receita = shared_ptr<Receita>(new ReceitaQuente(nome, tempoPreparo, intensidade, tempo));
 			}
 			else if(tipo == "Gelada"){
 				string strTempoCongelamento;
 				getline(ss, strTempoCongelamento, ';');
-				int tempoCongelamento;
-				receita = new ReceitaGelada(nome, tempoPreparo, tempoCongelamento);
+				int tempoCongelamento = stoi(strTempoCongelamento);
+				receita = shared_ptr<Receita>(new ReceitaGelada(nome, tempoPreparo, tempoCongelamento));
 			}
 			else if (tipo == "Mista"){
 				string intensidade, strTempo, strTempoCongelamento;
@@ -89,7 +89,7 @@ public:
 				getline(ss, strTempoCongelamento, ';');
 				int tempo = stoi(strTempo);
 				int tempoCongelamento = stoi(strTempo);
-				receita = new ReceitaMista(nome, tempoPreparo, intensidade, tempo, tempoCongelamento);
+				receita = shared_ptr<Receita>(new ReceitaMista(nome, tempoPreparo, intensidade, tempo, tempoCongelamento));
 			}
 			if (receita != nullptr) criarReceita(receita);
 		}
@@ -170,6 +170,7 @@ public:
 		if (receita == nullptr) return false;
 
 		receita->adicionarEtapa(etapa);
+		return true;
 	}
 
 	bool adicionarComponente(string nomePrincipal, string nomeComponente) {
