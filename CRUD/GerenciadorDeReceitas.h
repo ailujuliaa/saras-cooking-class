@@ -8,6 +8,9 @@
 #include <sstream>
 
 #include "Receita.h"
+#include "ReceitaQuente.h"
+#include "ReceitaGelada.h"
+#include "ReceitaMista.h"
 #include "Ingrediente.h"
 #include "Etapa.h"
 
@@ -33,7 +36,7 @@ public:
 			string tipo = receitas[i]->getTipo();
 
 			arquivo << receitas[i]->getTipo() << ";" << receitas[i]->getNome() << ";" << receitas[i]->getTempoPreparo();
-			if (tipo == "Forno") {
+			if (tipo == "Quente") {
 				arquivo << ";" << receitas[i]->getIntensidade() << ";" << receitas[i]->getTempo();
 			}
 			else if (tipo == "Gelada") {
@@ -43,14 +46,14 @@ public:
 				arquivo << ";" << receitas[i]->getIntensidade() << ";" << receitas[i]->getTempo() << ";" << receitas[i]->getTempoCongelamento();
 			}
 
-			arquivo << "\n";
+			arquivo << "\n\n";
 		}
 		arquivo.close();
 	}
 	
 	void lerArquivo(){
 		fstream arquivo;
-		arquivo.open("caminhoReceitas.txt", ios_base::out);
+		arquivo.open("caminhoReceitas.txt", ios_base::in);
 		if (!arquivo.is_open()){
 			cout << "Erro ao abrir arquivo." << endl;
 			return;
@@ -74,13 +77,13 @@ public:
 				getline(ss, intensidade, ';');
 				getline(ss, strTempo, ';');
 				int tempo = stoi(strTempo);
-				receita = new ReceitaQuente(nome, tempoPreparo, intensidade, tempo);
+				receita = shared_ptr<Receita>(new ReceitaQuente(nome, tempoPreparo, intensidade, tempo));
 			}
 			else if(tipo == "Gelada"){
 				string strTempoCongelamento;
 				getline(ss, strTempoCongelamento, ';');
-				int tempoCongelamento;
-				receita = new ReceitaGelada(nome, tempoPreparo, tempoCongelamento);
+				int tempoCongelamento = stoi(strTempoCongelamento);
+				receita = shared_ptr<Receita>(new ReceitaGelada(nome, tempoPreparo, tempoCongelamento));
 			}
 			else if (tipo == "Mista"){
 				string intensidade, strTempo, strTempoCongelamento;
@@ -89,7 +92,7 @@ public:
 				getline(ss, strTempoCongelamento, ';');
 				int tempo = stoi(strTempo);
 				int tempoCongelamento = stoi(strTempo);
-				receita = new ReceitaMista(nome, tempoPreparo, intensidade, tempo, tempoCongelamento);
+				receita = shared_ptr<Receita>(new ReceitaMista(nome, tempoPreparo, intensidade, tempo, tempoCongelamento));
 			}
 			if (receita != nullptr) criarReceita(receita);
 		}
@@ -101,7 +104,6 @@ public:
 		receitas.push_back(receita);
 		return true;
 	}
-
 
 	shared_ptr<Receita> buscarPorNome(string nome) {
 		for (int i = 0; i < receitas.size(); i++) {
@@ -170,6 +172,7 @@ public:
 		if (receita == nullptr) return false;
 
 		receita->adicionarEtapa(etapa);
+		return true;
 	}
 
 	bool adicionarComponente(string nomePrincipal, string nomeComponente) {
