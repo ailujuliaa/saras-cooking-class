@@ -14,7 +14,7 @@ public:
 
 	}
 
-	ReceitaQuente (string nome, int tempoPreparo, string intensidade, int tempo)	: Receita (nome, tempoPreparo), intensidade(intensidade), tempo(tempo) {
+	ReceitaQuente (string nome, int tempoPreparo, string intensidade, int tempo): Receita (nome, tempoPreparo), intensidade(intensidade), tempo(tempo) {
 
 	}
 
