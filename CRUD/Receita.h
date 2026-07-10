@@ -12,7 +12,7 @@ using namespace std;
 
 class Receita {
 protected:
-	static int id;
+	int id;
 	string nome;
 	int tempoPreparo;
 	vector<Ingrediente> ingrediente;
@@ -32,7 +32,7 @@ public:
 	}
 
 	void setId(int id) {
-		this->id = id++;
+		this->id = id;
 	}
 
 	int getId() const{ 
@@ -101,5 +101,9 @@ public:
 
 	virtual int calcularTempo() = 0;
 	virtual string getTipo() const = 0;
+	virtual string getIntensidade(0) = 0;
+	virtual int getTempo(0) = 0;
+	virtual int getTempoCongelamento(0) = 0;
+	
 };
 #endif;
