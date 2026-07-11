@@ -6,25 +6,25 @@
 class ReceitaGelada : public Receita
 {
 private:
-	int tempoCongelamento;
+    int tempoCongelamento;
 
 public:
-	ReceitaGelada() : Receita(), tempoCongelamento(0) {
-	}
+    ReceitaGelada() : Receita(), tempoCongelamento(0) {
+    }
 
-	ReceitaGelada(string nome, int tempoPreparo, int tempoCongelamento) : Receita(nome, tempoPreparo), tempoCongelamento(tempoCongelamento) {
-	}
+    ReceitaGelada(string nome, int tempoPreparo, int tempoCongelamento) : Receita(nome, tempoPreparo), tempoCongelamento(tempoCongelamento) {
+    }
 
-	int getTempoCongelamento() override { 
-		return tempoCongelamento; 
-	}
-	void setTempoCongelamento(int tempoCongelamento) { 
-		this->tempoCongelamento = tempoCongelamento; 
-	}
+    int getTempoCongelamento() override { 
+        return tempoCongelamento; 
+    }
+    void setTempoCongelamento(int tempoCongelamento) { 
+        this->tempoCongelamento = tempoCongelamento; 
+    }
 
-	int calcularTempo() override {
-		return tempoPreparo + tempoCongelamento + calcularTempoComponentes();
-	}
+    int calcularTempo() override {
+        return tempoPreparo + tempoCongelamento + calcularTempoComponentes();
+    }
 
 	string getIntensidade () override {
 		return "";
