@@ -1,8 +1,12 @@
-Quente;1;1;1;1
-
-1:1:1,1:1:1
-
-Quente;1;1;1;1
+Quente;sorvetinho;9;100;15
 
 
+
+Gelada;danone;9;30
+
+qualhar:20:pote,servir:0:pote
+
+Mista;bolo de murango;67;67;8;0
+1:murango:1
+pique:5:tauba,reserve:67:pote,assar:0:pote
 

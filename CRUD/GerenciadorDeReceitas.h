@@ -48,16 +48,24 @@ public:
 
 			arquivo <<"\n";
 			vector<Ingrediente>& ingredientes = receitas[i]->getIngredientes();
+			cout << "DEBUG: Tentando salvar receita " << receitas[i]->getNome() 
+     		<< ". Quantidade de ingredientes: " << ingredientes.size() << endl;
 			for (int j = 0; j < ingredientes.size(); j++) {
-				if (j > 0) arquivo << ";";
+				if (j > 0) {
+					arquivo << ";";
+				}
 				arquivo << ingredientes[j].getId() << ":" << ingredientes[j].getNome() << ":"
-						<< /*ingredientes[j].getQuantidade() <<*/ ":" << ingredientes[j].getUnidade();
+						<< /*ingredientes[j].getQuantidade() << ":" << */ ingredientes[j].getUnidade();
 			}
 
 			arquivo << "\n";
 			vector<Etapa>& etapas = receitas[i]->getEtapas();
+			cout << "DEBUG: Tentando salvar receita " << receitas[i]->getNome() 
+     		<< ". Quantidade de etapas: " << etapas.size() << endl;
 			for (int j = 0; j < etapas.size(); j++) {
-				if (j > 0) arquivo << ",";
+				if (j > 0){ 
+					arquivo << ",";
+				}
 				arquivo << etapas[j].getAcao() << ":" << etapas[j].getTempo() << ":" << etapas[j].getRecipiente();
 			}
 

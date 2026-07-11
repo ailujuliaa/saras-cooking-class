@@ -20,6 +20,8 @@ class Menu
 private:
 	GerenciadorDeReceitas gerenciadorDeReceitas;
 	shared_ptr<Receita> a;
+	vector<Ingrediente> ingredientesTemporarios;
+	vector<Etapa> etapasTemporarias;
 
 public:
 	Menu() {
@@ -32,7 +34,7 @@ public:
 	void exibirMenuPrincipal(GerenciadorDeReceitas& gerenciador) {
 		int opcao;
 		do{
-		cout << "Escolha uma opção: "
+		cout << "Escolha uma opção:\n"
 			<< "1- Criar receita\n" 
 			<< "2- Ler receita\n" 
 			<< "3- Atualizar receita\n" 
@@ -87,9 +89,9 @@ public:
 			getline(cin >> ws, nome);
 			cout << "Digite o tempo de preparo: ";
 			cin >> tempoPreparo;
-			adicionarIngredientesReceita(gerenciador, nome);
+			adicionarIngredientesReceita(ingredientesTemporarios);
 			cout << "Quais etapas antecedem o aquecimento?";
-			adicionarEtapasReceita(gerenciador, nome);
+			adicionarEtapasReceita(etapasTemporarias);
 			cout << "1- Forno \n2- Fogão? ";
 			cin >> opcao;
 			if (opcao == '1') {
@@ -109,7 +111,7 @@ public:
 			}
 
 			cout << "Quais são as etapas necessárias para finalizar a receita?" << endl;
-			adicionarEtapasReceita(gerenciador, nome);
+			adicionarEtapasReceita(etapasTemporarias);
 
 			a = shared_ptr<Receita>(new ReceitaQuente(nome, tempoPreparo, intensidade, tempoQuente));
 
@@ -121,13 +123,13 @@ public:
 			getline(cin >> ws, nome);
 			cout << "Digite o tempo de preparo: ";
 			cin >> tempoPreparo;
-			adicionarIngredientesReceita(gerenciador, nome);
+			adicionarIngredientesReceita(ingredientesTemporarios);
 			cout << "Quais etapas antecedem o resfriamento?";
-			adicionarEtapasReceita(gerenciador, nome);
+			adicionarEtapasReceita(etapasTemporarias);
 			cout << "Digite o tempo de resfriamento: ";
 			cin >> tempoCongelamento;
 			cout << "Quais são as etapas necessárias para finalizar a receita?" << endl;
-			adicionarEtapasReceita(gerenciador, nome);
+			adicionarEtapasReceita(etapasTemporarias);
 
 				a = shared_ptr<Receita>(new ReceitaGelada(nome, tempoPreparo, tempoCongelamento));
 
@@ -139,13 +141,13 @@ public:
 				getline(cin >> ws, nome);
 				cout << "Digite o tempo de preparo: ";
 				cin >> tempoPreparo;
-				adicionarIngredientesReceita(gerenciador, nome);
+				adicionarIngredientesReceita(ingredientesTemporarios);
 				cout << "Quais etapas iniciam essa receita, antecipando os processos térmicos?";
-				adicionarEtapasReceita(gerenciador, nome);
-				cout << "1- Forno \n2- Fogão \n3- Geladeira" << endl;
+				adicionarEtapasReceita(etapasTemporarias);
 			 
-				while ((opcao == '1' || opcao == '2' || opcao != '3') && opcoes < 1)
-			 	{
+				while (opcoes < 2){
+
+					cout << "1- Forno \n2- Fogão \n3- Geladeira" << endl;
 					cin >> opcao;
 					if (opcao == '1' && tempoQuente == 0) {
 					cout << "Digite a temperatura do forno: ";
@@ -153,28 +155,29 @@ public:
 					cout << "Digite o tempo do forno: ";
 					cin >> tempoQuente;
 					opcoes++;
-					break;
+
 					} else if (opcao == '2' && tempoQuente == 0) {
 					cout << "Digite a intensidade do fogão: ";
 					getline(cin >> ws, intensidade);
 					cout << "Digite o tempo do fogão: ";
 					cin >> tempoQuente;
 					opcoes++;
-					break;
+					
 					} else if (opcao == '3') {
 					cout << "Digite o tempo de congelamento: ";
 					cin >> tempoCongelamento;
 					opcoes++;
-					break;
+					
 					} else {
 					cout << "Opção inválida!" << endl;
+					continue;
 					}
 					cout << "Quais são as etapas necessárias antes do próximo processo térmico";
-					adicionarEtapasReceita(gerenciador, nome);
+					adicionarEtapasReceita(etapasTemporarias);
 				}
 
 				cout << "Quais são as etapas necessárias para finalizar a receita?" << endl;
-				adicionarEtapasReceita(gerenciador, nome);
+				adicionarEtapasReceita(etapasTemporarias);
 
 				a = shared_ptr<Receita>(new ReceitaMista(nome, tempoPreparo, intensidade, tempoQuente, tempoCongelamento));
 					break;
@@ -184,13 +187,21 @@ public:
 				return;
 		}
 		gerenciadorDeReceitas.criarReceita(a);
+		for (int i = 0; i < etapasTemporarias.size(); i++) {
+    		gerenciadorDeReceitas.adicionarEtapa(nome, etapasTemporarias[i]); 
+		}
+
+		for (int i = 0; i < ingredientesTemporarios.size(); i++) {
+    		gerenciadorDeReceitas.adicionarIngrediente(nome, ingredientesTemporarios[i]); 
+		}
+
 		cout << "Receita cadastrada com sucesso!" << endl;
 
 		
 	}
 
 	void exibirMenuLeitura() {
-
+		gerenciadorDeReceitas.lerArquivo();
 		
 	}
 
@@ -219,7 +230,7 @@ public:
 		return vector<string>();
 	}
 
-	void adicionarIngredientesReceita(GerenciadorDeReceitas& gerenciador, string nomeReceita) {
+	void adicionarIngredientesReceita(vector<Ingrediente>& Ingredientes) {
 		char continuar;
 		do {
 			string nome, unidade;
@@ -230,21 +241,24 @@ public:
 			getline(cin >> ws, unidade);
 
 			Ingrediente ingrediente(0, nome, unidade); // id é definido pelo gerenciador
-			gerenciadorDeReceitas.adicionarIngrediente(nomeReceita, ingrediente);
+			ingredientesTemporarios.push_back(ingrediente);
 
 			cout << "Adicionar outro ingrediente? (s/n): ";
 			cin >> continuar;
+			cin.ignore();
 		} while (continuar == 's' || continuar == 'S');
 	}
 
-	void adicionarEtapasReceita(GerenciadorDeReceitas& gerenciador, string nomeReceita) {
+	void adicionarEtapasReceita(vector<Etapa>& Etapas) {
 		char continuar;
 		do {
 			Etapa etapa = perguntarEtapa();
-			gerenciadorDeReceitas.adicionarEtapa(nomeReceita, etapa);
+			
+			etapasTemporarias.push_back(etapa);
 
 			cout << "Adicionar outra etapa? (s/n): ";
 			cin >> continuar;
+			cin.ignore();
 		} while (continuar == 's' || continuar == 'S');
 	}
 

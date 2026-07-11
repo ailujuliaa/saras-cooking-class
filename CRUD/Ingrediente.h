@@ -11,7 +11,7 @@ class Ingrediente
 private:
 	int id;
 	string nome;
-	float quantidade;
+	//float quantidade;
 	string unidade;
 
 public:

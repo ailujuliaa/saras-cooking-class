@@ -59,12 +59,11 @@ public:
 	}
 
 	
-
 	void adicionarIngrediente(Ingrediente novoIngrediente) {
 		ingrediente.push_back(novoIngrediente);
 	}
 
-
+	
 	bool removerIngrediente(int idIngrediente) {
 		for (size_t i = 0; i < ingrediente.size(); i++) {
 			if (ingrediente[i].getId() == idIngrediente) {
