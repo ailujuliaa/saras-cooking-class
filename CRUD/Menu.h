@@ -197,7 +197,6 @@ public:
 
 		cout << "Receita cadastrada com sucesso!" << endl;
 
-		
 	}
 
 	void exibirMenuLeitura () {

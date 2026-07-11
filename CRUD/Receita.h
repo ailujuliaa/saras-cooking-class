@@ -26,7 +26,7 @@ public:
 
 	Receita(string nome, int tempoPreparo) : nome(nome), tempoPreparo(tempoPreparo) {
 
-		}
+	}
 
 	virtual ~Receita() {
 	}
@@ -105,4 +105,4 @@ public:
 	virtual int getTempoCongelamento() = 0;
 	
 };
-#endif;
+#endif

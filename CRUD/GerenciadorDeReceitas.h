@@ -103,6 +103,7 @@ public:
 				getline(ss, strTempoCongelamento, ';');
 				int tempoCongelamento = stoi(strTempoCongelamento);
 				receita = shared_ptr<Receita>(new ReceitaGelada(nome, tempoPreparo, tempoCongelamento));
+
 			}
 			else if (tipo == "Mista") {
 				string intensidade, strTempo, strTempoCongelamento;
