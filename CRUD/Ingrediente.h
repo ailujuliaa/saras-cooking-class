@@ -15,10 +15,10 @@ private:
 	string unidade;
 
 public:
-	Ingrediente():id(0), nome(""), quantidade(0.0f), unidade("") {
+	Ingrediente():id(0), nome(""), unidade("") {
 	}
 
-	Ingrediente(int id, string nome, float quantidade, string unidade) : id(id), nome(nome), quantidade(quantidade), unidade(unidade) {
+	Ingrediente(int id, string nome, string unidade) : id(id), nome(nome), unidade(unidade) {
 	}
 
 	int getId() const { 
@@ -35,12 +35,12 @@ public:
 		this->nome = nome; 
 	}
 
-	float getQuantidade() const { 
+	/*float getQuantidade() const { 
 		return quantidade; 
 	}
 	void setQuantidade(float quantidade) { 
 		this->quantidade = quantidade; 
-	}
+	}*/
 
 	string getUnidade() const { 
 		return unidade; 
@@ -49,4 +49,4 @@ public:
 		this->unidade = unidade; 
 	}
 };
-#endif
+#endif;

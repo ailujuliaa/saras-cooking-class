@@ -84,23 +84,23 @@ public:
 		switch (opcao) {
 			case '1':
 			cout << "Digite o nome da receita: ";
-			cin >> nome;
+			getline(cin >> ws, nome);
 			cout << "Digite o tempo de preparo: ";
 			cin >> tempoPreparo;
-			//adicionarIngredientesReceita(gerenciador, nome);
+			adicionarIngredientesReceita(gerenciador, nome);
 			cout << "Quais etapas antecedem o aquecimento?";
 			adicionarEtapasReceita(gerenciador, nome);
 			cout << "1- Forno \n2- Fogão? ";
 			cin >> opcao;
 			if (opcao == '1') {
 				cout << "Digite a temperatura do forno: ";
-				cin >> intensidade;
+				getline(cin >> ws, intensidade);
 				cout << "Digite o tempo do forno: ";
 				cin >> tempoQuente;
 
 			} else if (opcao == '2') {
 				cout << "Digite a intensidade do fogão: ";
-				cin >> intensidade;
+				getline(cin >> ws, intensidade);
 				cout << "Digite o tempo do fogão: ";
 				cin >> tempoQuente;
 
@@ -118,16 +118,16 @@ public:
 			case '2':
 
 			cout << "Digite o nome da receita: ";
-			cin >> nome;
+			getline(cin >> ws, nome);
 			cout << "Digite o tempo de preparo: ";
 			cin >> tempoPreparo;
 			adicionarIngredientesReceita(gerenciador, nome);
 			cout << "Quais etapas antecedem o resfriamento?";
-			perguntarEtapa();
+			adicionarEtapasReceita(gerenciador, nome);
 			cout << "Digite o tempo de resfriamento: ";
 			cin >> tempoCongelamento;
 			cout << "Quais são as etapas necessárias para finalizar a receita?" << endl;
-			perguntarEtapa();
+			adicionarEtapasReceita(gerenciador, nome);
 
 				a = shared_ptr<Receita>(new ReceitaGelada(nome, tempoPreparo, tempoCongelamento));
 
@@ -136,9 +136,12 @@ public:
 			case '3':
 
 				cout << "Digite o nome da receita: ";
-				cin >> nome;
+				getline(cin >> ws, nome);
 				cout << "Digite o tempo de preparo: ";
 				cin >> tempoPreparo;
+				adicionarIngredientesReceita(gerenciador, nome);
+				cout << "Quais etapas iniciam essa receita, antecipando os processos térmicos?";
+				adicionarEtapasReceita(gerenciador, nome);
 				cout << "1- Forno \n2- Fogão \n3- Geladeira" << endl;
 			 
 				while ((opcao == '1' || opcao == '2' || opcao != '3') && opcoes < 1)
@@ -146,14 +149,14 @@ public:
 					cin >> opcao;
 					if (opcao == '1' && tempoQuente == 0) {
 					cout << "Digite a temperatura do forno: ";
-					cin >> intensidade;
+					getline(cin >> ws, intensidade);
 					cout << "Digite o tempo do forno: ";
 					cin >> tempoQuente;
 					opcoes++;
 					break;
 					} else if (opcao == '2' && tempoQuente == 0) {
 					cout << "Digite a intensidade do fogão: ";
-					cin >> intensidade;
+					getline(cin >> ws, intensidade);
 					cout << "Digite o tempo do fogão: ";
 					cin >> tempoQuente;
 					opcoes++;
@@ -166,7 +169,12 @@ public:
 					} else {
 					cout << "Opção inválida!" << endl;
 					}
+					cout << "Quais são as etapas necessárias antes do próximo processo térmico";
+					adicionarEtapasReceita(gerenciador, nome);
 				}
+
+				cout << "Quais são as etapas necessárias para finalizar a receita?" << endl;
+				adicionarEtapasReceita(gerenciador, nome);
 
 				a = shared_ptr<Receita>(new ReceitaMista(nome, tempoPreparo, intensidade, tempoQuente, tempoCongelamento));
 					break;
@@ -215,16 +223,13 @@ public:
 		char continuar;
 		do {
 			string nome, unidade;
-			float quantidade;
 
 			cout << "Nome do ingrediente: ";
-			cin >> nome;
-			cout << "Quantidade: ";
-			cin >> quantidade;
-			cout << "Unidade (g, ml, xícara...): ";
-			cin >> unidade;
+			getline(cin >> ws, nome);
+			cout << "Qual a quantidade e unidade (g, ml, xícara...): ";
+			getline(cin >> ws, unidade);
 
-			Ingrediente ingrediente(0, nome, quantidade, unidade); // id é definido pelo gerenciador
+			Ingrediente ingrediente(0, nome, unidade); // id é definido pelo gerenciador
 			gerenciadorDeReceitas.adicionarIngrediente(nomeReceita, ingrediente);
 
 			cout << "Adicionar outro ingrediente? (s/n): ";
@@ -248,11 +253,11 @@ public:
 		int tempo;
 
 		cout << "Ação da etapa (ex: misturar, assar): ";
-		cin >> acao;
+		getline(cin >> ws, acao);
 		cout << "Tempo da etapa (minutos): ";
 		cin >> tempo;
 		cout << "Recipiente utilizado: ";
-		cin >> recipiente;
+		getline(cin >> ws, recipiente);
 
 		return Etapa(acao, tempo, recipiente);
 	}

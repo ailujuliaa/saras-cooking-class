@@ -51,7 +51,7 @@ public:
 			for (int j = 0; j < ingredientes.size(); j++) {
 				if (j > 0) arquivo << ";";
 				arquivo << ingredientes[j].getId() << ":" << ingredientes[j].getNome() << ":"
-						<< ingredientes[j].getQuantidade() << ":" << ingredientes[j].getUnidade();
+						<< /*ingredientes[j].getQuantidade() <<*/ ":" << ingredientes[j].getUnidade();
 			}
 
 			arquivo << "\n";
@@ -119,16 +119,16 @@ public:
 
 			while (getline(ssIng, ingredienteStr, ';')) {
 				stringstream dadosIng(ingredienteStr);
-				string idStr, nomeIng, qtdStr, unidade;
+				string idStr, nomeIng, unidade;
 
 				getline(dadosIng, idStr, ':');
 				getline(dadosIng, nomeIng, ':');
-				getline(dadosIng, qtdStr, ':');
+				//getline(dadosIng, qtdStr, ':');
 				getline(dadosIng, unidade, ':');
 				int id = stoi(idStr);
-				float qtd = stof(qtdStr);
+				//float qtd = stof(qtdStr);
 
-				Ingrediente ingrediente(id, nomeIng, qtd, unidade);
+				Ingrediente ingrediente(id, nomeIng, unidade);
 				receita->adicionarIngrediente(ingrediente);
 			}
 
@@ -280,4 +280,4 @@ public:
 		return maiorId + 1;
 	}
 };
-#endif
+#endif;
