@@ -33,6 +33,7 @@ public:
 	}
 	void exibirMenuPrincipal(GerenciadorDeReceitas& gerenciador) {
 		int opcao;
+		string nome;
 		do{
 		cout << "Escolha uma opção:\n"
 			<< "1- Criar receita\n" 
@@ -50,19 +51,18 @@ public:
 					exibirMenuCadastro(gerenciador);
 					break;
 				case 2:
-					exibirMenuLeitura();
+					
 					break;
 				case 3:
 					exibirMenuEdicao();
 					break;
 				case 4:
-					exibirMenuBusca();
-					break;
+					exibirMenuBusca(gerenciador);
 				case 5:
 					exibirMenuEdicao();
 					break;
 				case 6:
-					exibirListaReceitas(gerenciadorDeReceitas.listarTodas());
+					gerenciador.listarReceitas();
 					break;
 				case 7:
 					gerenciadorDeReceitas.salvarArquivo();
@@ -145,7 +145,7 @@ public:
 				cout << "Quais etapas iniciam essa receita, antecipando os processos térmicos?";
 				adicionarEtapasReceita(etapasTemporarias);
 			 
-				while (opcoes < 2){
+				while (opcoes <= 1){
 
 					cout << "1- Forno \n2- Fogão \n3- Geladeira" << endl;
 					cin >> opcao;
@@ -200,15 +200,38 @@ public:
 		
 	}
 
-	void exibirMenuLeitura() {
-		gerenciadorDeReceitas.lerArquivo();
+	void exibirMenuLeitura () {
+		
 		
 	}
 
-	void exibirMenuBusca() {
+	void exibirMenuBusca(GerenciadorDeReceitas& gerenciador) {
+		string nomeBuscado;
+    
+    cout << "\n--- BUSCAR RECEITA ---" << endl;
+    cout << "Digite o nome exato da receita: ";
+    
+    // getline com 'ws' ignora sujeiras do buffer e pega a linha inteira com os espaços
+    getline(cin >> ws, nomeBuscado); 
+
+    // Chama o back-end para fazer o trabalho pesado
+    auto receitaEncontrada = gerenciador.buscarPorNome(nomeBuscado);
+
+    // Avalia o resultado
+    if (receitaEncontrada != nullptr) {
+        cout << "\nReceita Encontrada com Sucesso!" << endl;
+        cout << "-----------------------------------" << endl;
+        
+        // Aqui você chama a função que imprime a receita na tela.
+        // Pode ser algo como:
+        // receitaEncontrada->imprimirDetalhes();
+        
+    } else {
+        cout << "\nOps! Nenhuma receita encontrada com o nome '" << nomeBuscado << "'." << endl;
+    }
+}
 
 
-	}
 
 	void exibirMenuEdicao() {
 		

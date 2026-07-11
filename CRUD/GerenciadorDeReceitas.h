@@ -48,8 +48,6 @@ public:
 
 			arquivo <<"\n";
 			vector<Ingrediente>& ingredientes = receitas[i]->getIngredientes();
-			cout << "DEBUG: Tentando salvar receita " << receitas[i]->getNome() 
-     		<< ". Quantidade de ingredientes: " << ingredientes.size() << endl;
 			for (int j = 0; j < ingredientes.size(); j++) {
 				if (j > 0) {
 					arquivo << ";";
@@ -60,8 +58,6 @@ public:
 
 			arquivo << "\n";
 			vector<Etapa>& etapas = receitas[i]->getEtapas();
-			cout << "DEBUG: Tentando salvar receita " << receitas[i]->getNome() 
-     		<< ". Quantidade de etapas: " << etapas.size() << endl;
 			for (int j = 0; j < etapas.size(); j++) {
 				if (j > 0){ 
 					arquivo << ",";
@@ -118,8 +114,9 @@ public:
 				int tempo = stoi(strTempo);
 				int tempoCongelamento = stoi(strTempoCongelamento);
 				receita = shared_ptr<Receita>(new ReceitaMista(nome, tempoPreparo, intensidade, tempo, tempoCongelamento));
+			
 			}
-
+			
 			getline(arquivo, linha);
 
 			stringstream ssIng(linha);
@@ -163,6 +160,19 @@ public:
 		}
 
 		arquivo.close();
+
+	}
+
+	void listarReceitas(){
+		lerArquivo();
+		if (receitas.empty()){
+        cout << "Nenhuma receita foi carregada do arquivo." << endl;
+        return;
+    	}
+    	cout << "--- Receitas Disponíveis ---" << endl;
+    	for (int i = 0; i < receitas.size(); i++) {
+        cout << i + 1 << " - " << receitas[i]->getNome() << "\n";
+    	}
 	}
 		
 	bool criarReceita(shared_ptr<Receita> receita) {
@@ -172,6 +182,7 @@ public:
 	}
 
 	shared_ptr<Receita> buscarPorNome(string nome) {
+		lerArquivo();
 		for (int i = 0; i < receitas.size(); i++) {
 			if (receitas[i]->getNome() == nome) {
 				return receitas[i];
@@ -180,9 +191,9 @@ public:
     return nullptr;
 	}
 
-	vector<shared_ptr<Receita>> listarTodas() {
+	/*vector<shared_ptr<Receita>> listarTodas() {
 		return receitas; 
-	}
+	}*/
 
 	vector<shared_ptr<Receita>> listarPorNome(string nome) { 
 		vector<shared_ptr<Receita>> resultado;
@@ -191,6 +202,21 @@ public:
 				resultado.push_back(receitas[i]);
 		}
     return resultado;
+	}
+
+	void printarReceita(int i){
+		lerArquivo();
+		cout << receitas[i]->getTipo() << "\n" << receitas[i]->getNome() << "\n" << receitas[i]->getTempoPreparo() <<endl;
+		if (receitas[i]->getTipo() == "Quente") {
+			cout << receitas[i]->getIntensidade() << ";" << receitas[i]->getTempo();
+			}
+			else if (receitas[i]->getTipo() == "Gelada") {
+				cout << receitas[i]->getTempoCongelamento();
+			}
+			else if (receitas[i]->getTipo() == "Mista") {
+				cout << receitas[i]->getIntensidade() << ";" << receitas[i]->getTempo() << ";" << receitas[i]->getTempoCongelamento();
+			}
+
 	}
 
 	bool atualizarReceita(string nome, shared_ptr<Receita> novaReceita) {
@@ -288,4 +314,4 @@ public:
 		return maiorId + 1;
 	}
 };
-#endif;
+#endif

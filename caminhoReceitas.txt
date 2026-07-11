@@ -1,12 +1,8 @@
-Quente;sorvetinho;9;100;15
+Mista;bolo de murango;67;670;100;10
+1:murango:6
+pique:7:liquidificador,retirar:0:forma,0:0:0,0:0:0
 
-
-
-Gelada;danone;9;30
-
-qualhar:20:pote,servir:0:pote
-
-Mista;bolo de murango;67;67;8;0
-1:murango:1
-pique:5:tauba,reserve:67:pote,assar:0:pote
+Gelada;sorvetinho;10;50
+2:leite:10litros
+bater:15:liquidificador,sirva:0:copos
 
