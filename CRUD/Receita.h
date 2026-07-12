@@ -98,6 +98,8 @@ public:
 		return total;
 	}
 
+	virtual string getLugarGelado () = 0;
+	virtual string getLugarQuente() = 0;
 	virtual int calcularTempo() = 0;
 	virtual string getTipo() const = 0;
 	virtual string getIntensidade() = 0;

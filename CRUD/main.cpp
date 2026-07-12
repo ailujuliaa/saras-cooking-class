@@ -6,6 +6,7 @@
 
 int main (){
     GerenciadorDeReceitas gerenciadorMain;
+    gerenciadorMain.lerArquivo();
     Menu menu;
     menu.exibirMenuPrincipal(gerenciadorMain);
 	return 0;

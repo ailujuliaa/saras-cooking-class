@@ -6,16 +6,25 @@
 class ReceitaQuente : public Receita
 {
 private:
+    string lugar;
     string intensidade;
     int tempo;
 
 public:
-    ReceitaQuente() : Receita(), intensidade(""), tempo(0) {
+    ReceitaQuente() : Receita(), lugar(""),  intensidade(""), tempo(0) {
 
     }
 
-	ReceitaQuente (string nome, int tempoPreparo, string intensidade, int tempo): Receita (nome, tempoPreparo), intensidade(intensidade), tempo(tempo) {
+	ReceitaQuente (string nome, int tempoPreparo, string lugar, string intensidade, int tempo): Receita (nome, tempoPreparo), lugar (lugar), intensidade(intensidade), tempo(tempo) {
 
+    }
+
+    string getLugarQuente () override {
+        return lugar;
+    }
+
+     void setLugar(string lugar) {
+        this->lugar = lugar; 
     }
 
     string getIntensidade() override { 
@@ -38,6 +47,11 @@ public:
     string getTipo() const override {
         return "Quente";
     }
+
+    string getLugarGelado() override {
+        return "";
+    }
+
 	int getTempoCongelamento() override {
 		return 0;
 	}
