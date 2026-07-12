@@ -219,7 +219,7 @@ public:
 		int j = 0;
 		bool p = 0;
 		string lugarQuente, lugarquente = "", descricao = "";
-		cout << receita->getTipo() << "\n" << receita->getNome() << "\nTempo de Preparo: " << receita->getTempoPreparo() <<endl;
+		cout << receita->getTipo() << "\n" << receita->getNome() << "\nTempo de Preparo: " << receita->getTempoPreparo() << "minutos: " <<endl;
 		for(int i = 0; i < receita->getIngredientes().size(); i++){
 			cout << receita->getIngredientes()[i].getUnidade() << " de " << receita->getIngredientes()[i].getNome()<<endl;
 		}
