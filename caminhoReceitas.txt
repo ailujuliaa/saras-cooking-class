@@ -1,4 +1,8 @@
 Mista;bolo de murango;90;levar a geladeira ate endurecer;Levar ao forno~ ou ate dourar;180;30;30
 3:murango:10 unidades;4:leite:3 xicaras
-bater tudo:9:liquidificador~,reserve:0:pote~,servir:0:.
+bater tudo:9:liquidificador~,reserve:0:pote~
+
+Gelada;sorvete;30;freezer ate endurecer;60
+5:leite:3 litros;6:morango:5
+bater:10:no liquidificador~,servir:0:potinho~
 

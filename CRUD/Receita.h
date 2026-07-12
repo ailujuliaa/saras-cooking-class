@@ -74,12 +74,23 @@ public:
 		return false;
 	}
 
+	
+
 	vector<Etapa>& getEtapas() { 
 		return etapa; 
 	}
  
 	void adicionarEtapa(Etapa novaEtapa) {
 		etapa.push_back(novaEtapa);
+	}
+
+	bool removerEtapa(int num) {
+		if (num >= 0 && num < etapa.size()) {
+            
+            
+            etapa.erase(etapa.begin() + num);
+            return true;
+        }
 	}
  
 	vector<shared_ptr<Receita>>& getComponentes() { 

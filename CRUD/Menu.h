@@ -92,7 +92,7 @@ public:
 					break;
 				}
 				case 3:{
-					
+					exibirMenuEdicao(gerenciador);
 					break;
 				}
 				case 4:{
@@ -303,6 +303,7 @@ public:
 	void exibirMenuEdicao(GerenciadorDeReceitas& gerenciador){
 		int i = 0, a;
 		ingredientesTemporarios.clear();
+		etapasTemporarias.clear();
 		string nomeBuscado, novoNome, nomeVelho;
 		shared_ptr<Receita> novaReceita;
 		shared_ptr<Ingrediente> novoIngrediente;
@@ -352,9 +353,37 @@ public:
 						continue;
 					}
 				}
+			}
 			break;
 
-			} 
+			case '3':
+			cout << "Deseja:\n1- Adicionar etapas\n2-Remover etapas ";
+			cin >> o;
+			if (o == '1'){
+				adicionarEtapasReceita(etapasTemporarias);
+				for (i = 0; i < etapasTemporarias.size(); i++){
+				gerenciador.adicionarEtapa(nomeVelho, etapasTemporarias[i]);
+				}
+			}else{
+				cout << "Digite o numero da etapa que quer excluir: ";
+				for (i = 0; i < receitaEncontrada->getEtapas().size(); i++){
+					
+					cout << "/n" << i << "-" << receitaEncontrada->getEtapas()[i].getAcao()
+         			<< " em um(a) " << receitaEncontrada->getEtapas()[i].getRecipiente()
+         			<< " por " << receitaEncontrada->getEtapas()[i].getTempo()
+        			 << " minutos\n";
+				}
+				cin >> novoTempo;
+				for (i = 0; i < receitaEncontrada->getEtapas().size(); i++){
+					if ( i == novoTempo ){
+						gerenciador.removerEtapa(receitaEncontrada->getNome(), novoTempo);
+
+					}else{
+						continue;
+					}
+				}
+			}
+			break;
 
 			default:
 			break;

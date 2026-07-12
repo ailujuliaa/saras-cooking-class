@@ -412,6 +412,14 @@ public:
 		return true;
 	}
 
+	bool removerEtapa(string nome, int num) {//por nome
+		shared_ptr<Receita> receita = buscarPorNome(nome);
+		if (receita == nullptr) return false;
+
+		receita->removerEtapa(num);
+		return true;
+	}
+
 	bool adicionarComponente(string nomePrincipal, string nomeComponente) {
 		if (nomePrincipal == nomeComponente) return false;
 
