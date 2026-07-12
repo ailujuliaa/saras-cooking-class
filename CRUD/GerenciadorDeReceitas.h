@@ -21,6 +21,7 @@ class GerenciadorDeReceitas
 private:
 	string caminhoReceitas;
 	vector<shared_ptr<Receita>> receitas;
+	
 
 public:
 
@@ -71,6 +72,7 @@ public:
 	}
 	
 	void lerArquivo() {
+		cout << "[DEBUG] Iniciando salvamento. A gaveta tem " << receitas.size() << " receitas." << endl;
 		fstream arquivo;
 		arquivo.open("caminhoReceitas.txt", ios_base::in);
 
@@ -204,17 +206,17 @@ public:
     return resultado;
 	}
 
-	void printarReceita(int i){
+	void printarReceita(shared_ptr<Receita> receita){
 		lerArquivo();
-		cout << receitas[i]->getTipo() << "\n" << receitas[i]->getNome() << "\n" << receitas[i]->getTempoPreparo() <<endl;
-		if (receitas[i]->getTipo() == "Quente") {
-			cout << receitas[i]->getIntensidade() << ";" << receitas[i]->getTempo();
+		cout << receita->getTipo() << "\n" << receita->getNome() << "\n" << receita->getTempoPreparo() <<endl;
+		if (receita->getTipo() == "Quente") {
+			cout << receita->getIntensidade() << ";" << receita->getTempo();
 			}
-			else if (receitas[i]->getTipo() == "Gelada") {
-				cout << receitas[i]->getTempoCongelamento();
+			else if (receita->getTipo() == "Gelada") {
+				cout << receita->getTempoCongelamento();
 			}
-			else if (receitas[i]->getTipo() == "Mista") {
-				cout << receitas[i]->getIntensidade() << ";" << receitas[i]->getTempo() << ";" << receitas[i]->getTempoCongelamento();
+			else if (receita->getTipo() == "Mista") {
+				cout << receita->getIntensidade() << ";" << receita->getTempo() << ";" << receita->getTempoCongelamento() <<endl;
 			}
 
 	}
