@@ -364,9 +364,8 @@ public:
 }
 }
 
-	bool atualizarReceita(string nome, shared_ptr<Receita> novaReceita) {
-		shared_ptr<Receita> receita = buscarPorNome(nome);
-		if (receita == nullptr) return false;
+	bool atualizarReceita(shared_ptr<Receita> a, shared_ptr<Receita> novaReceita) {
+		shared_ptr<Receita> receita = a;
 		
 		receita->setNome(novaReceita->getNome());
 		receita->setTempoPreparo(novaReceita->getTempoPreparo());

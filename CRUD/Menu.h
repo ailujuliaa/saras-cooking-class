@@ -300,6 +300,70 @@ public:
 }
 
 
+	void exibirMenuEdicao(GerenciadorDeReceitas& gerenciador){
+		int i = 0, a;
+		ingredientesTemporarios.clear();
+		string nomeBuscado, novoNome, nomeVelho;
+		shared_ptr<Receita> novaReceita;
+		shared_ptr<Ingrediente> novoIngrediente;
+		int novoTempo;
+		char o;
+		cout << "\n--- BUSCAR RECEITA PARA EDITAR---" << endl;
+    	cout << "Digite o nome exato da receita: ";
+    	getline(cin >> ws, nomeBuscado); 
+
+    	auto receitaEncontrada = gerenciador.buscarPorNome(nomeBuscado);
+		nomeVelho = receitaEncontrada->getNome();
+
+    if (receitaEncontrada != nullptr) {
+        cout << "\nDeseja editar o que nessa receita?" << endl;
+        cout << "1- Nome e Tempo de Preparo\n2- Ingredientes\n3- Etapas" << endl;
+		cin >> o;
+		switch (o){
+			case '1':
+			cout << "Digite o novo nome da receita: ";
+			cin >> novoNome;
+			cout << "Digite o novo tempo de preparo da receita: ";
+			cin >> novoTempo;
+
+			novaReceita->setNome(novoNome);
+			novaReceita->setTempoPreparo(novoTempo);
+
+			gerenciador.atualizarReceita(receitaEncontrada,novaReceita);
+			break;
+
+			case '2':
+			cout << "Deseja:\n1- Adicionar ingredientes\n2-Remover ingredientes ";
+			cin >> o;
+			if (o=='1'){
+				adicionarIngredientesReceita(ingredientesTemporarios);
+				for (i = 0; i < ingredientesTemporarios.size(); i++){
+				gerenciador.adicionarIngrediente(nomeVelho, ingredientesTemporarios[i]);
+				}
+			}else{
+				cout << "Digite o nome do ingrediente que quer excluir: ";
+				cin >> novoNome;
+				for (i = 0; i < receitaEncontrada->getIngredientes().size(); i++){
+					if (receitaEncontrada->getIngredientes()[i].getNome() == novoNome){
+						a = receitaEncontrada->getIngredientes()[i].getId();
+						gerenciador.removerIngrediente(receitaEncontrada->getNome(), a);
+
+					}else{
+						continue;
+					}
+				}
+			break;
+
+			} 
+
+			default:
+			break;
+		}
+
+		}
+
+	}
+
 
 	void exibirMenuExclusao(GerenciadorDeReceitas& gerenciador) {
 		string nomeBuscado;
