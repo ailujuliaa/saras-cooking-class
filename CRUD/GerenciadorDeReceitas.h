@@ -528,6 +528,7 @@ cout << "\n";
 		cout << "Total de Receitas Cadastradas : " << totalReceitas << endl;
 		cout << "  - Receitas Quentes         : " << totalQuentes << endl;
 		cout << "  - Receitas Geladas         : " << totalGeladas << endl;
+		cout << "  - Receitas Mistas         : " << totalMistas << endl;
 		cout << "-----------------------------------------------------" << endl;
 		cout << "Total Geral de Ingredientes   : " << totalIngredientes << endl;
 		cout << "Tempo Medio de Preparo        : " << tempoMedio << " minutos" << endl;
