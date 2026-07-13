@@ -27,24 +27,24 @@ private:
 				getline(cin >> ws, intensidade);
 				cout << "Digite o tempo do forno: ";
 				cin >> tempoQuente;
-				cout << "Faca uma breve descrição: ";
+				cout << "Faca uma breve descrição:\nLevar ao forno... ";
 				getline(cin >> ws, lugarQuente);
 
-				lugarQuente = "Levar ao forno ~" + lugarQuente;
+				lugarQuente = "Levar ao forno a ~" + lugarQuente;
 
 			} else if (opcao == '2') {
 				cout << "Digite a intensidade do fogão: ";
 				getline(cin >> ws, intensidade);
 				cout << "Digite o tempo do fogão: ";
 				cin >> tempoQuente;
-				cout << "Faca uma breve descrição: ";
+				cout << "Faca uma breve descrição:\nLevar ao fogao... ";
 				getline(cin >> ws, lugarQuente);
-				lugarQuente = "Levar ao fogão ~" + lugarQuente;
+				lugarQuente = "Levar ao fogão em ~" + lugarQuente;
 
 				} else if (opcao == '3') {
 				cout << "Nome do aparelho: " << endl;
 				getline(cin >> ws, lugarQuente);
-				cout << "Faca uma breve descrição: ";
+				cout << "Faca uma breve descrição:\n(ex:levar ao airfryer à 150 graus ou levar ao microondas retirando de 15 em 15 segundos) ";
 				getline(cin >> ws, intensidade);
 				cout << "Digite o tempo de aquecimento: ";
 				cin >> tempoQuente;
@@ -137,8 +137,7 @@ public:
 				cout << "receita já registrada";
 				break;
 			}
-			cout << "Digite o tempo de preparo:(minutos) ";
-			cin >> tempoPreparo;
+			
 
 			adicionarIngredientesReceita(ingredientesTemporarios);
 			cout << "Quais etapas antecedem o aquecimento?" <<endl;
@@ -157,7 +156,7 @@ public:
     		etapasTemporarias.back().setRecipiente(indentificador);
 			}
 
-			a = shared_ptr<Receita>(new ReceitaQuente(nome, tempoPreparo, lugarQuente, intensidade, tempoQuente));
+			a = shared_ptr<Receita>(new ReceitaQuente(nome, lugarQuente, intensidade, tempoQuente));
 		
 		
 				break;
@@ -170,8 +169,6 @@ public:
 				cout << "receita já registrada";
 				break;
 			}
-			cout << "Digite o tempo de preparo: ";
-			cin >> tempoPreparo;
 			adicionarIngredientesReceita(ingredientesTemporarios);
 			cout << "Quais etapas antecedem o resfriamento?";
 			adicionarEtapasReceita(etapasTemporarias);
@@ -179,7 +176,7 @@ public:
    			indentificador = etapasTemporarias.back().getRecipiente() + "~";
    			etapasTemporarias.back().setRecipiente(indentificador);
 			}
-			cout << "Aonde deseja resfriar (ex: geladeira, frezzer...)\n" << "Existe alguma breve descrição? (caso contrário, apenas não escreva)" << endl;
+			cout << "Aonde deseja resfriar (ex: geladeira, frezzer...)\n" << "Além disso, existe alguma breve descrição? (caso contrário, apenas não escreva)" << endl;
 			getline(cin >> ws, lugarGelado);
 			cout << "Digite o tempo de resfriamento:(minutos) ";
 			cin >> tempoCongelamento;
@@ -191,7 +188,7 @@ public:
 			}
 		
 
-				a = shared_ptr<Receita>(new ReceitaGelada(nome, lugarGelado, tempoPreparo, tempoCongelamento));
+				a = shared_ptr<Receita>(new ReceitaGelada(nome, lugarGelado, tempoCongelamento));
 
 				break;
 			
@@ -202,8 +199,6 @@ public:
 				cout << "receita já registrada";
 				break;
 			}
-				cout << "Digite o tempo de preparo:(minutos) ";
-				cin >> tempoPreparo;
 
 				adicionarIngredientesReceita(ingredientesTemporarios);
 				cout << "Quais etapas antecedem o aquecimento?" <<endl;
@@ -222,7 +217,7 @@ public:
 					opcoes++;
 
 					} else if (opcao == '2' && lugarGelado == "") {
-					cout << "Aonde deseja resfriar (ex: geladeira, frezzer...)\n" << "Existe alguma breve descrição? (caso contrário, apenas não escreva)" << endl;
+					cout << "Aonde deseja resfriar (ex: geladeira, frezzer...)\n" << "Além disso, existe alguma breve descrição? (caso contrário, apenas não escreva)" << endl;
 					getline(cin >> ws, lugarGelado);
 					cout << "Digite o tempo de resfriamento:(minutos) ";
 					cin >> tempoCongelamento;
@@ -254,7 +249,7 @@ public:
     			etapasTemporarias.back().setRecipiente(indentificador);
 				}
 
-				a = shared_ptr<Receita>(new ReceitaMista(nome, tempoPreparo, lugarGelado, lugarQuente, intensidade, tempoQuente, tempoCongelamento));
+				a = shared_ptr<Receita>(new ReceitaMista(nome, lugarGelado, lugarQuente, intensidade, tempoQuente, tempoCongelamento));
 					break;
 						}					
 			default:
@@ -305,8 +300,6 @@ public:
 		ingredientesTemporarios.clear();
 		etapasTemporarias.clear();
 		string nomeBuscado, novoNome, nomeVelho;
-		shared_ptr<Receita> novaReceita;
-		shared_ptr<Ingrediente> novoIngrediente;
 		int novoTempo;
 		char o;
 		cout << "\n--- BUSCAR RECEITA PARA EDITAR---" << endl;
@@ -318,89 +311,119 @@ public:
 
     if (receitaEncontrada != nullptr) {
         cout << "\nDeseja editar o que nessa receita?" << endl;
-        cout << "1- Nome e Tempo de Preparo\n2- Ingredientes\n3- Etapas" << endl;
+        cout << "1- Nome \n2- Ingredientes\n3- Etapas\n4- Sair" << endl;
 		cin >> o;
 		switch (o){
 			case '1':
 			cout << "Digite o novo nome da receita: ";
 			getline(cin >> ws, novoNome);
-			cout << "Digite o novo tempo de preparo da receita:(minutos) ";
-			cin >> novoTempo;
+			
+			receitaEncontrada->setNome(novoNome);
 
-			novaReceita->setNome(novoNome);
-			novaReceita->setTempoPreparo(novoTempo);
+			cout << "\nReceita alterada com sucesso!\n"<<endl;
 
-			gerenciador.atualizarReceita(receitaEncontrada,novaReceita);
 			break;
 
 			case '2':
-			cout << "Deseja:\n1- Adicionar ingredientes\n2-Remover ingredientes ";
+			cout << "Deseja:\n1- Adicionar ingredientes\n2- Remover ingredientes\n3- Sair ";
 			cin >> o;
 			if (o=='1'){
+				for(int i = 0; i < receitaEncontrada->getIngredientes().size(); i++){
+				cout << receitaEncontrada->getIngredientes()[i].getUnidade() << " de " << receitaEncontrada->getIngredientes()[i].getNome()<<"\n"<<endl;
+		}
 				adicionarIngredientesReceita(ingredientesTemporarios);
 				for (i = 0; i < ingredientesTemporarios.size(); i++){
 				gerenciador.adicionarIngrediente(nomeVelho, ingredientesTemporarios[i]);
 				}
-			}else{
-				cout << "Digite o nome do ingrediente que quer excluir: ";
+				if (i==1){
+				cout << "\nIngrediente adicionado com sucesso!"<<endl;
+				}else{
+					cout << "\nIngredientes adicionados com sucesso!"<<endl;
+				}
+			}else if(o=='2'){
+				for(int i = 0; i < receitaEncontrada->getIngredientes().size(); i++){
+				cout << receitaEncontrada->getIngredientes()[i].getUnidade() << " de " << receitaEncontrada->getIngredientes()[i].getNome()<<endl;
+		}
+				cout << "\nDigite o nome do ingrediente que quer excluir: ";
 				getline (cin >> ws, novoNome);
 				for (i = 0; i < receitaEncontrada->getIngredientes().size(); i++){
 					if (receitaEncontrada->getIngredientes()[i].getNome() == novoNome){
 						a = receitaEncontrada->getIngredientes()[i].getId();
 						gerenciador.removerIngrediente(receitaEncontrada->getNome(), a);
+						cout << "\nIngrediente excluído com sucesso!"<<endl;
+						break;
 
 					}else{
 						continue;
 					}
 				}
+				if (i == receitaEncontrada->getIngredientes().size()){
+					cout << "\nIngrediente não encontrado na receita, tente novamente."<<endl;
 			}
-			break;
+		}
+			else if (o=='3'){
+					 cout << "\nSaindo...\n" << endl;
+					break;
+				}else{
+					 cout << "\nNúmero inválido!\n" << endl;
+				}
+                break;
 
 			case '3':
-			cout << "Deseja:\n1- Adicionar etapas\n2-Remover etapas ";
+			cout << "Deseja:\n1- Adicionar etapas\n2-Remover etapas\n3-Sair ";
 			cin >> o;
 			if (o == '1'){
 				for (i = 0; i < receitaEncontrada->getEtapas().size(); i++){
 					
-					cout << "/n" << i+1 << "-" << receitaEncontrada->getEtapas()[i].getAcao()
+					cout << "\n" << i+1 << "-" << receitaEncontrada->getEtapas()[i].getAcao()
          			<< " em um(a) " << receitaEncontrada->getEtapas()[i].getRecipiente()
          			<< " por " << receitaEncontrada->getEtapas()[i].getTempo()
         			 << " minutos\n";
 				}
-				adicionarEtapasReceita(etapasTemporarias, true);
-				for (i = 0; i < etapasTemporarias.size(); i++){
-				gerenciador.adicionarEtapa(nomeVelho, etapasTemporarias[i]);
-				}
-			}else{
+				vector<Etapa>& etapasOficiais = receitaEncontrada->getEtapas();
+                
+                adicionarEtapasReceita(etapasOficiais, true);
+                
+                
+                cout << "\nEtapas adicionadas e organizadas com sucesso!" << endl;
+
+			}else if(o=='2'){
 				cout << "Digite o numero da etapa que quer excluir: ";
 				for (i = 0; i < receitaEncontrada->getEtapas().size(); i++){
 					
-					cout << "/n" << i+1 << "-" << receitaEncontrada->getEtapas()[i].getAcao()
+					cout << "\n" << i+1 << "-" << receitaEncontrada->getEtapas()[i].getAcao()
          			<< " em um(a) " << receitaEncontrada->getEtapas()[i].getRecipiente()
          			<< " por " << receitaEncontrada->getEtapas()[i].getTempo()
         			 << " minutos\n";
 				}
 				cin >> novoTempo;
-				for (i = 0; i < receitaEncontrada->getEtapas().size(); i++){
-					if ( i == novoTempo-1 ){
-						gerenciador.removerEtapa(receitaEncontrada->getNome(), novoTempo-1);
-
-					}else{
-						continue;
-					}
+				if (gerenciador.removerEtapa(receitaEncontrada->getNome(), novoTempo - 1)) {
+                        cout << "Etapa removida com sucesso!" << endl;
+                    } else {
+                        cout << "\nNúmero inválido!" << endl;
+                    }
+                }
+				else if (o=='3'){
+					 cout << "\nSaindo...\n" << endl;
+					break;
+				}else{
+					 cout << "\nNúmero inválido!\n" << endl;
 				}
-			}
-			break;
+                break;
 
-			default:
-			break;
-		}
+				case '4':
+				cout << "\nSaindo ...\n" << endl;
+				break;
 
-		}
-		else {
-			cout << "\nOps! Nenhuma receita encontrada com o nome '" << nomeBuscado << "'." << endl;
-		}
+				default:
+                cout << "\nOpção inválida!\n" << endl;
+                return;
+            }
+	}
 
+	else {
+			cout << "\nOps! Nenhuma receita encontrada com o nome '" << nomeBuscado << "'.\n" << endl;
+		}
 	}
 
 
@@ -414,21 +437,21 @@ public:
     	auto receitaEncontrada = gerenciador.buscarPorNome(nomeBuscado);
 
     if (receitaEncontrada != nullptr) {
-        cout << "\nDeseja excluir essa receita?" << endl;
+        cout << "\nDeseja excluir essa receita(s/n)?" << endl;
         cout << "-----------------------------------" << endl;
 		cin >> o;
 		if (o == 's' || o == 'S'){
 			if (gerenciador.removerReceita(receitaEncontrada) == true){
-			cout << "Operação executada com sucesso!" << endl;
+			cout << "Operação executada com sucesso\n!" << endl;
 			}
 
 		}else {
-			 cout << "\nOperação cancelada" << endl;
+			 cout << "\nOperação cancelada\n" << endl;
 		}
         
     
     } else {
-        cout << "\nOps! Nenhuma receita encontrada com o nome '" << nomeBuscado << "'." << endl;
+        cout << "\nOps! Nenhuma receita encontrada com o nome '" << nomeBuscado << "'.\n" << endl;
     }
 }
 		
@@ -470,31 +493,54 @@ public:
 	}
 
 	void adicionarEtapasReceita(vector<Etapa>& Etapas, bool a = false) {
-		char continuar;
-		int b;
-		do {
-			Etapa etapa = perguntarEtapa();
-			
-			
-			if (a){
-				cout << "Qual o numero da etapa que antecede essa?";
-				cin >> b;
-				if (b >= 0 && b <= Etapas.size()){
-				Etapas.insert(Etapas.begin() + b, etapa);
-				} else {
-					Etapas.push_back(etapa);
-				}
+    char continuar, c;
+    int b;
+    string indentificador1, indentificador;
 
-			} else {
-				Etapas.push_back(etapa);
-			}
-			cout << "Adicionar outra etapa? (s/n): ";
-			cin >> continuar;
-			cin.ignore();
-		} while (continuar == 's' || continuar == 'S');
-		
-	}
+    do {
+        Etapa etapa = perguntarEtapa();
+        
+        if (a) {
+            cout << "Qual o numero da etapa que antecede essa? ";
+            cin >> b;
+            
+           
+            if (b >= 0 && b < Etapas.size()) {
+                
+                cout << "Essa etapa antecede algum processo térmico(s/n)? ";
+                cin >> c;
+                
+                if (c == 's' || c == 'S') {
+                    indentificador1 = Etapas[b].getRecipiente();
+                    
+                  
+                    if (!indentificador1.empty() && indentificador1.back() == '~') {
+                        indentificador1.pop_back();
+                        Etapas[b].setRecipiente(indentificador1);
+                    }
+                    
+                    indentificador = etapa.getRecipiente() + "~";
+                    etapa.setRecipiente(indentificador);
+                }
+                
+                
+                Etapas.insert(Etapas.begin() + b , etapa);
+                
+            } else {
+                cout << "\n[Aviso] Posição inválida. Etapa adicionada ao final da lista." << endl;
+                Etapas.push_back(etapa);
+            }
 
+        } else {
+            Etapas.push_back(etapa);
+        }
+        
+        cout << "\nAdicionar outra etapa? (s/n): ";
+        cin >> continuar;
+        cin.ignore();
+        
+    } while (continuar == 's' || continuar == 'S');
+}
 	Etapa perguntarEtapa(){
 		string acao, recipiente;
 		int tempo;

@@ -15,7 +15,7 @@ public:
         
     }
 
-	ReceitaMista(string nome, int tempoPreparo, string lugarGelado, string lugarQuente, string intensidade, int tempo, int tempoCongelamento) : Receita(nome, tempoPreparo), lugarGelado(lugarGelado), lugarQuente(lugarQuente), intensidade(intensidade), tempo(tempo), tempoCongelamento(tempoCongelamento) {
+	ReceitaMista(string nome, string lugarGelado, string lugarQuente, string intensidade, int tempo, int tempoCongelamento) : Receita(nome), lugarGelado(lugarGelado), lugarQuente(lugarQuente), intensidade(intensidade), tempo(tempo), tempoCongelamento(tempoCongelamento) {
 
         }
 
@@ -58,7 +58,7 @@ public:
     }
 
     int calcularTempo() override {
-        return tempoPreparo + tempo + tempoCongelamento + calcularTempoComponentes();
+        return tempo + tempoCongelamento + calcularTempoEtapas();
     }
     string getTipo() const override {
         return "Mista";

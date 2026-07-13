@@ -20,11 +20,11 @@ protected:
 	vector<shared_ptr<Receita>> componentes;
 
 public:
-	Receita(): nome(""), tempoPreparo(0) {
+	Receita(): nome("") {
 
 	}
 
-	Receita(string nome, int tempoPreparo) : nome(nome), tempoPreparo(tempoPreparo) {
+	Receita(string nome) : nome(nome) {
 
 	}
 
@@ -45,13 +45,6 @@ public:
 	}
 	void setNome(string nome) { 
 		this->nome = nome; 
-	}
-
-	int getTempoPreparo() const { 
-		return tempoPreparo; 
-	}
-	void setTempoPreparo(int tempoPreparo) { 
-		this->tempoPreparo = tempoPreparo; 
 	}
 
 	vector<Ingrediente>& getIngredientes() { 
@@ -87,10 +80,10 @@ public:
 	bool removerEtapa(int num) {
 		if (num >= 0 && num < etapa.size()) {
             
-            
             etapa.erase(etapa.begin() + num);
             return true;
         }
+		return false;
 	}
  
 	vector<shared_ptr<Receita>>& getComponentes() { 
@@ -101,10 +94,10 @@ public:
 		componentes.push_back(componente);
 	}
 
-	int calcularTempoComponentes() const {
+	int calcularTempoEtapas() const {
 		int total = 0;
-		for (size_t i = 0; i < componentes.size(); i++) {
-			total += componentes[i]->calcularTempo();
+		for (size_t i = 0; i < etapa.size(); i++) {
+			total += etapa[i].getTempo();
 		}
 		return total;
 	}

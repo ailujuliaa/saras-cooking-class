@@ -15,7 +15,7 @@ public:
 
     }
 
-	ReceitaQuente (string nome, int tempoPreparo, string lugar, string intensidade, int tempo): Receita (nome, tempoPreparo), lugar (lugar), intensidade(intensidade), tempo(tempo) {
+	ReceitaQuente (string nome, string lugar, string intensidade, int tempo): Receita (nome), lugar (lugar), intensidade(intensidade), tempo(tempo) {
 
     }
 
@@ -42,7 +42,7 @@ public:
     }
 
     int calcularTempo() override {
-        return tempoPreparo + tempo + calcularTempoComponentes();
+        return  tempo + calcularTempoEtapas();
     }
     string getTipo() const override {
         return "Quente";

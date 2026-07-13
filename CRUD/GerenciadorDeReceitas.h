@@ -37,7 +37,7 @@ public:
 		for (int i=0; i < receitas.size(); i++){
 			string tipo = receitas[i]->getTipo();
 
-			arquivo << receitas[i]->getTipo() << ";" << receitas[i]->getNome() << ";" << receitas[i]->getTempoPreparo();
+			arquivo << receitas[i]->getTipo() << ";" << receitas[i]->getNome() << ";" << receitas[i]->calcularTempo();
 			if (tipo == "Quente") {
 				arquivo << ";" << receitas[i]->getLugarQuente() << ";" << receitas[i]->getIntensidade() << ";" << receitas[i]->getTempo();
 			}
@@ -100,14 +100,14 @@ public:
 				getline(ss, intensidade, ';');
 				getline(ss, strTempo, ';');
 				int tempo = stoi(strTempo);
-				receita = shared_ptr<Receita>(new ReceitaQuente(nome, tempoPreparo, lugar, intensidade, tempo));
+				receita = shared_ptr<Receita>(new ReceitaQuente(nome, lugar, intensidade, tempo));
 			}
 			else if (tipo == "Gelada") {
 				string strTempoCongelamento, lugar;
 				getline(ss, lugar, ';');
 				getline(ss, strTempoCongelamento, ';');
 				int tempoCongelamento = stoi(strTempoCongelamento);
-				receita = shared_ptr<Receita>(new ReceitaGelada(nome, lugar, tempoPreparo, tempoCongelamento));
+				receita = shared_ptr<Receita>(new ReceitaGelada(nome, lugar, tempoCongelamento));
 
 			}
 			else if (tipo == "Mista") {
@@ -120,7 +120,7 @@ public:
 				getline(ss, strTempoCongelamento, ';');
 				int tempo = stoi(strTempo);
 				int tempoCongelamento = stoi(strTempoCongelamento);
-				receita = shared_ptr<Receita>(new ReceitaMista(nome, tempoPreparo, lugarGelado, lugarQuente, intensidade, tempo, tempoCongelamento));
+				receita = shared_ptr<Receita>(new ReceitaMista(nome, lugarGelado, lugarQuente, intensidade, tempo, tempoCongelamento));
 			
 			}
 			
@@ -178,7 +178,7 @@ public:
     	cout << "--- Receitas Disponíveis ---" << endl;
     	for (int i = 0; i < receitas.size(); i++) {
 			if (a){
-        	cout << i + 1 << " - " << "\n";
+        	cout << i + 1 << " - ";
 			printarReceita(receitas[i]);
 			}
 			else {
@@ -219,10 +219,13 @@ public:
 		int j = 0;
 		bool p = 0;
 		string lugarQuente, lugarquente = "", descricao = "";
-		cout << receita->getTipo() << "\n" << receita->getNome() << "\nTempo de Preparo: " << receita->getTempoPreparo() << "minutos: " <<endl;
+		cout << receita->getNome() << "\n\n" << receita->getTipo() 
+		<< "\nTempo de Preparo: " << receita->calcularTempo() << "minutos\n\nIgredientes:\n" <<endl;
 		for(int i = 0; i < receita->getIngredientes().size(); i++){
 			cout << receita->getIngredientes()[i].getUnidade() << " de " << receita->getIngredientes()[i].getNome()<<endl;
 		}
+
+		cout << "\nEtapas:\n" << endl;
 
 		while (p == 0 && j < receita->getEtapas().size()) {
 
@@ -233,7 +236,7 @@ public:
         	p = true;
     	}
 
-    	cout << receita->getEtapas()[j].getAcao()
+    	cout << "*" << receita->getEtapas()[j].getAcao()
          << " em um(a) " << recipienteAtual
          << " por " << receita->getEtapas()[j].getTempo()
          << " minutos\n";
@@ -254,14 +257,14 @@ public:
     
     		descricao = lugarQuente.substr(posicao + 1);
 
-			cout << lugarquente <<" " << receita->getIntensidade() 
-			<< " por aproximadamente " << receita->getTempo() << " "<< descricao << endl;
+			cout << "*" << lugarquente <<" "<< receita->getIntensidade() 
+			<< " por aproximadamente " << receita->getTempo() << " minutos "<< descricao << endl;
 
 			}
 		}
 			else if (receita->getTipo() == "Gelada") {
-				cout << "Levar à(o)" << receita->getLugarGelado() << " por aproximadamente " 
-				<< receita->getTempoCongelamento() <<  endl;
+				cout <<"*"<< "Levar à(o) " << receita->getLugarGelado() << " por aproximadamente " 
+			    << receita->getTempoCongelamento() <<" minutos"<< endl;
 
 			}
 			
@@ -280,26 +283,29 @@ public:
 				string ordem = receita->getLugarGelado();
 				if (ordem.back() == '~'){
 					ordem.pop_back();
-					cout << "Levar à(o)" << ordem << " por aproximadamente " 
-					<< receita->getTempoCongelamento() <<  endl;
+					cout << "*" << "Levar à(o)" << ordem << " por aproximadamente " 
+					<< receita->getTempoCongelamento() <<" minutos"<<  endl;
+					
+					p = false;
 					while (p == 0 && j < receita->getEtapas().size()) {
 
-   					p = 0;
-
-    				string recipienteAtual = receita->getEtapas()[j].getRecipiente();
+   			 		string recipienteAtual = receita->getEtapas()[j].getRecipiente();
 
     				if (!recipienteAtual.empty() && recipienteAtual.back() == '~') {
-       				p = 1;
-        			recipienteAtual.pop_back();
-    			}
+        				recipienteAtual.pop_back();
+        				p = true;
+    				}
 
-    				cout << receita->getEtapas()[j].getAcao()
-        		<< " em um(a) " << recipienteAtual
-         		<< " por " << receita->getEtapas()[j].getTempo()
-         		<< " minutos\n";
+    				cout << "*" << receita->getEtapas()[j].getAcao()
+         				<< " em um(a) " << recipienteAtual
+         				<< " por " << receita->getEtapas()[j].getTempo()
+         				<< " minutos\n";
 
-    			j++;
-}
+    					j++;
+
+    					if (p)
+        					break;
+						}
 
 					lugarQuente = receita->getLugarQuente();
 					size_t posicao = lugarQuente.find("~");
@@ -309,8 +315,8 @@ public:
     
     				descricao = lugarQuente.substr(posicao + 1);
 
-					cout << lugarquente << receita->getIntensidade() 
-					<< " por aproximadamente " << receita->getTempo() << "ou "<< descricao << endl;
+					cout <<"*"<< lugarquente << receita->getIntensidade() 
+					<< " por aproximadamente " << receita->getTempo() << " minutos "<< descricao << endl;
 			}
 			}
 			else {
@@ -322,35 +328,37 @@ public:
     
     			descricao = lugarQuente.substr(posicao + 1);
 
-				cout << lugarquente << receita->getIntensidade() 
-				<< " por aproximadamente " << receita->getTempo() << "ou "<< descricao << endl;
+				cout<< "*" << lugarquente <<" " << receita->getIntensidade() 
+				<< " por aproximadamente " << receita->getTempo() << " minutos "<< descricao << endl;
 
+				p = false;
 				while (p == 0 && j < receita->getEtapas().size()) {
-
-   			 	string recipienteAtual = receita->getEtapas()[j].getRecipiente();
-
-    			if (!recipienteAtual.empty() && recipienteAtual.back() == '~') {
-        		recipienteAtual.pop_back();
-        		p = true;
-    	}
-
-			}
-		
-			while (p == 0 && j < receita->getEtapas().size()) {
 
    			 string recipienteAtual = receita->getEtapas()[j].getRecipiente();
 
     		if (!recipienteAtual.empty() && recipienteAtual.back() == '~') {
         	recipienteAtual.pop_back();
         	p = true;
-			}
-		j++;
-	 }
+    	}
+
+    		cout << "*" << receita->getEtapas()[j].getAcao()
+         		<< " em um(a) " << recipienteAtual
+         		<< " por " << receita->getEtapas()[j].getTempo()
+         		<< " minutos\n";
+
+    			j++;
+
+    			if (p)
+        			break;
+}
 
 		cout << "Levar à(o)" << ordem << " por aproximadamente " 
 					<< receita->getTempoCongelamento() <<  endl;
 			}
 		}
+		
+}
+		p = false;
 		while (p == 0 && j < receita->getEtapas().size()) {
 
    			 string recipienteAtual = receita->getEtapas()[j].getRecipiente();
@@ -359,16 +367,24 @@ public:
         	recipienteAtual.pop_back();
         	p = true;
     	}
-		j++;
-	}
+
+    	cout << "*" << receita->getEtapas()[j].getAcao()
+         << " em um(a) " << recipienteAtual
+         << " por " << receita->getEtapas()[j].getTempo()
+         << " minutos\n";
+
+    	j++;
+
+    	if (p)
+        break;
 }
+cout << "\n";
 }
 
 	bool atualizarReceita(shared_ptr<Receita> a, shared_ptr<Receita> novaReceita) {
 		shared_ptr<Receita> receita = a;
 		
 		receita->setNome(novaReceita->getNome());
-		receita->setTempoPreparo(novaReceita->getTempoPreparo());
 		return true;
 
 	}

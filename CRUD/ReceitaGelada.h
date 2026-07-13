@@ -13,7 +13,7 @@ public:
     ReceitaGelada() : Receita(),lugar(""), tempoCongelamento(0) {
     }
 
-    ReceitaGelada(string nome, string lugar,  int tempoPreparo, int tempoCongelamento) : Receita(nome, tempoPreparo), lugar(lugar), tempoCongelamento(tempoCongelamento) {
+    ReceitaGelada(string nome, string lugar,  int tempoCongelamento) : Receita(nome), lugar(lugar), tempoCongelamento(tempoCongelamento) {
     }
 
     string getLugarGelado() override { 
@@ -32,7 +32,7 @@ public:
     }
 
     int calcularTempo() override {
-        return tempoPreparo + tempoCongelamento + calcularTempoComponentes();
+        return tempoCongelamento + calcularTempoEtapas();
     }
 
 	string getIntensidade () override {
