@@ -12,18 +12,16 @@ private:
 
 public:
     ReceitaMista() : Receita(), lugarGelado("0"), lugarQuente("0"), intensidade("0"), tempo(0), tempoCongelamento(0) {
-        
     }
 
 	ReceitaMista(string nome, string lugarGelado, string lugarQuente, string intensidade, int tempo, int tempoCongelamento) : Receita(nome), lugarGelado(lugarGelado), lugarQuente(lugarQuente), intensidade(intensidade), tempo(tempo), tempoCongelamento(tempoCongelamento) {
-
-        }
+    }
 
     string getLugarQuente () override {
         return lugarQuente;
     }
 
-     void setLugarQuente(string lugar) {
+    void setLugarQuente(string lugarQuente) {
         this->lugarQuente = lugarQuente; 
     }
 
@@ -31,10 +29,9 @@ public:
         return lugarGelado;
     }
 
-     void setLugarGelado(string lugar) {
+     void setLugarGelado(string lugarGelado) {
         this->lugarGelado = lugarGelado; 
     }
-
 
     string getIntensidade() override { 
         return intensidade; 
@@ -60,6 +57,7 @@ public:
     int calcularTempo() override {
         return tempo + tempoCongelamento + calcularTempoEtapas();
     }
+
     string getTipo() const override {
         return "Mista";
     }

@@ -4,8 +4,6 @@
 
 using namespace std;
 
-
-
 class Etapa
 {
 private:
@@ -15,11 +13,9 @@ private:
 
 public:
 	Etapa() : acao(""), tempo(0), recipiente("") {
-
     }
 
 	Etapa(string acao, int tempo, string recipiente) : acao(acao), tempo(tempo), recipiente(recipiente) {
-
     }
 
 	string getAcao() const { 
