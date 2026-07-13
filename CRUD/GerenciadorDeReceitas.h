@@ -492,14 +492,21 @@ cout << "\n";
 			return;
 		}
 
-		int totalReceitas = receitas.size();
-		int totalQuentes = 0, totalGeladas = 0, totalMistas = 0;
-		int totalIngredientes = 0;
-		int tempoTotal = 0;
-		int maiorTempo = 0;
+		int totalReceitas = receitas.size(), totalQuentes = 0, totalGeladas = 0, totalMistas = 0, totalIngredientes = 0, tempoTotal = 0, maiorTempo = 0, maiorId=0;
 		string receitaMaisDemorada = "";
 
-	
+
+        for (int i = 0; i < totalReceitas; i++) {
+			vector<Ingrediente>& ingredientes = receitas[i]->getIngredientes();
+		    for (int j = 0; j < totalIngredientes; j++) {
+				if (ingredientes[j].getId()>0){
+					totalIngredientes ++;
+				}
+				
+			}
+		}
+			
+
 		for (int i = 0; i < totalReceitas; i++) {
 			string tipo = receitas[i]->getTipo();
 			
@@ -509,7 +516,7 @@ cout << "\n";
 			else if (tipo == "Mista") totalMistas++;
 
 		
-			totalIngredientes += receitas[i]->getIngredientes().size();
+
 
 			
 			int tempoAtual = receitas[i]->calcularTempo();

@@ -151,7 +151,7 @@ public:
                 getline(cin >> ws, nome);
                 if (gerenciador.buscarPorNome(nome) != nullptr){
                     cout << "receita já registrada";
-                    break;
+                    return;
                 }
 
                 adicionarIngredientesReceita(ingredientesTemporarios);
@@ -472,15 +472,10 @@ public:
             cout << "Qual a quantidade e unidade (g, ml, xícara...): ";
             getline(cin >> ws, unidade);
 
-            for (size_t i = 0; i < Ingredientes.size(); i++) {
-                if (Ingredientes[i].getNome() == nome) {
-                    continue;
-                }else{
-					Ingrediente ingrediente(0, nome, unidade); 
-            		Ingredientes.push_back(ingrediente);
-
-				}
-            }
+            
+            Ingrediente ingrediente(0, nome, unidade); 
+        	Ingredientes.push_back(ingrediente);
+               
 
             cout << "Adicionar outro ingrediente? (s/n): ";
             continuar = lerChar();
