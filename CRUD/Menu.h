@@ -462,7 +462,7 @@ public:
         return vector<string>();
     }
 
-    bool adicionarIngredientesReceita(vector<Ingrediente>& Ingredientes) {
+    void adicionarIngredientesReceita(vector<Ingrediente>& Ingredientes) {
         char continuar;
         do {
             string nome, unidade;
@@ -474,12 +474,15 @@ public:
 
             for (size_t i = 0; i < Ingredientes.size(); i++) {
                 if (Ingredientes[i].getNome() == nome) {
-                    return false; 
-                }
+                    continue;
+                }else{
+					Ingrediente ingrediente(0, nome, unidade); 
+            		Ingredientes.push_back(ingrediente);
+
+				}
             }
 
-            Ingrediente ingrediente(0, nome, unidade); 
-            Ingredientes.push_back(ingrediente);
+        
 
             cout << "Adicionar outro ingrediente? (s/n): ";
             continuar = lerChar();
