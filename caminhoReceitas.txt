@@ -6,3 +6,7 @@ Gelada;Pudim;252;geladeira coberto com papel filme;240
 5:Leite Condensado:1 lata;6:Leite:2 xicaras;7:Ovos :3 unidades
 Bater todos os ingredientes :5:liquidificador,Despejar na forma com caramelo:2:forma~,Desenformar:5:prato
 
+Mista;Pavê;211;geladeira;Levar ao fogão em ~mexer até engrossar;médio;8;180
+8:Biscoito:1 pacote;5:Leite Condensado:1 lata;3:Chocolate em pó:4 colheres de sopa;9:Creme de leite:1 caixa
+Fazer o creme de chocolate:8:panela~,montar as camadas de biscoito e creme:10:travessa~,decorar com raspas de chocolate:5:travessa
+

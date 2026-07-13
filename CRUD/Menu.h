@@ -271,8 +271,7 @@ public:
                         opcoes++;
 
                     } else if (opcao == '2' && lugarGelado == "") {
-                        cout << "🧊 Onde deseja resfriar? (ex: geladeira, frezzer...): \n";
-						cout << "📝 Alguma observação? (Opcional): ";
+                        cout << "🧊 Onde deseja resfriar? (ex: geladeira, frezzer...): \n" << "📝 Alguma observação? (Opcional): \n";
 						getline(cin >> ws, lugarGelado);
 						cout << "⏳ Tempo de resfriamento (min): ";
                         tempoCongelamento = lerInteiro();
