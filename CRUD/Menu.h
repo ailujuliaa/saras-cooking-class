@@ -77,7 +77,7 @@ public:
 			<< "3- Atualizar receita\n" 
 			<< "4- Exibir receitas\n" 
 			<< "5- Excluir receita\n" 
-			<< "6- Ver todas as receitas\n" 
+			<< "6- Relátorio\n" 
 			<< "7- Sair" << endl;
 
 			cin >> opcao;
@@ -97,6 +97,7 @@ public:
 				}
 				case 4:{
 					gerenciador.listarReceitas();
+					gerenciador.listarReceitas(true);
 					break;
 				}
 				case 5:{
@@ -104,7 +105,7 @@ public:
 					break;
 				}
 				case 6:{
-					gerenciador.listarReceitas(true);
+					gerenciador.exibirRelatorioSistema();
 					break;
 				}
 				case 7:{
@@ -557,6 +558,8 @@ public:
 	}
 	
 };
+
+
 
 
 #endif

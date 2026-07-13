@@ -481,5 +481,60 @@ cout << "\n";
 		}
 		return maiorId + 1;
 	}
+	void exibirRelatorioSistema() {
+		if (receitas.empty()) {
+			cout << "\n--- RELATORIO DO SISTEMA ---" << endl;
+			cout << "Nenhuma receita cadastrada no momento." << endl;
+			return;
+		}
+
+		int totalReceitas = receitas.size();
+		int totalQuentes = 0, totalGeladas = 0, totalMistas = 0;
+		int totalIngredientes = 0;
+		int tempoTotal = 0;
+		int maiorTempo = 0;
+		string receitaMaisDemorada = "";
+
+	
+		for (int i = 0; i < totalReceitas; i++) {
+			string tipo = receitas[i]->getTipo();
+			
+		
+			if (tipo == "Quente") totalQuentes++;
+			else if (tipo == "Gelada") totalGeladas++;
+			else if (tipo == "Mista") totalMistas++;
+
+		
+			totalIngredientes += receitas[i]->getIngredientes().size();
+
+			
+			int tempoAtual = receitas[i]->calcularTempo();
+			tempoTotal += tempoAtual;
+			
+			if (tempoAtual > maiorTempo) {
+				maiorTempo = tempoAtual;
+				receitaMaisDemorada = receitas[i]->getNome();
+			}
+		}
+
+		float tempoMedio = (float)tempoTotal / totalReceitas;
+
+		
+		cout << "\n---------------------RELATORIO -----------------------" << endl;
+		cout << "Total de Receitas Cadastradas : " << totalReceitas << endl;
+		cout << "  -> Receitas Quentes         : " << totalQuentes << endl;
+		cout << "  -> Receitas Geladas         : " << totalGeladas << endl;
+		cout << "  -> Receitas Mistas          : " << totalMistas << endl;
+		cout << "-----------------------------------------------------" << endl;
+		cout << "Total Geral de Ingredientes   : " << totalIngredientes << endl;
+		cout << "Tempo Medio de Preparo        : " << tempoMedio << " minutos" << endl;
+		if (maiorTempo > 0) {
+			cout << "Receita Mais Demorada         : " << receitaMaisDemorada 
+			     << " (" << maiorTempo << " min)" << endl;
+		}
+		cout << "-----------------------------------------------------" << endl;
+		
+	}
+	
 };
 #endif
