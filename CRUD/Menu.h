@@ -482,12 +482,9 @@ public:
 				}
             }
 
-        
-
             cout << "Adicionar outro ingrediente? (s/n): ";
             continuar = lerChar();
         } while (continuar == 's' || continuar == 'S');
-        return true;
     }
 
     void adicionarEtapasReceita(vector<Etapa>& Etapas, bool a = false) {
