@@ -111,7 +111,6 @@ public:
                     break;
                 }
                 case 4:{
-                    gerenciador.listarReceitas();
                     gerenciador.listarReceitas(true);
                     break;
                 }

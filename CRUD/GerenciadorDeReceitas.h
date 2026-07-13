@@ -175,9 +175,9 @@ public:
         cout << "Nenhuma receita foi carregada do arquivo." << endl;
         return;
     	}
-    	cout << "--- Receitas Disponíveis ---" << endl;
     	for (int i = 0; i < receitas.size(); i++) {
 			if (a){
+			cout << "---------- Receitas Disponíveis -----------" << endl;
         	cout << i + 1 << " - ";
 			printarReceita(receitas[i]);
 			}
@@ -378,7 +378,7 @@ public:
     	if (p)
         break;
 }
-cout << "\n";
+cout << "\n -----------------------------------------------------" << endl;
 }
 
 	bool atualizarReceita(shared_ptr<Receita> a, shared_ptr<Receita> novaReceita) {
@@ -479,7 +479,7 @@ cout << "\n";
 					maiorId = ingredientes[j].getId();
 				}
 				if (ingredientes[j].getNome()==ingrediente.getNome()){
-					return ingrediente.getId();
+					return ingredientes[j].getId();
 				}
 			}
 		}
@@ -492,33 +492,45 @@ cout << "\n";
 			return;
 		}
 
-		int totalReceitas = receitas.size(), totalQuentes = 0, totalGeladas = 0, totalMistas = 0, totalIngredientes = 0, tempoTotal = 0, maiorTempo = 0, maiorId=0;
-		string receitaMaisDemorada = "";
+		int totalReceitas = receitas.size(), totalQuentes = 0, totalGeladas = 0, totalMistas = 0, totalIngredientes = 0, tempoTotal = 0, maiorTempo = 0, maiorId=0, menorTempo, totalEtapas = 0;
+		string receitaMaisDemorada = "", receitaMaisRapida = "";
 
+        vector<int> idsContados; 
 
         for (int i = 0; i < totalReceitas; i++) {
-			vector<Ingrediente>& ingredientes = receitas[i]->getIngredientes();
-		    for (int j = 0; j < totalIngredientes; j++) {
-				if (ingredientes[j].getId()>0){
-					totalIngredientes ++;
-				}
-				
-			}
-		}
+            vector<Ingrediente>& ingredientes = receitas[i]->getIngredientes();
+            
+            for (int j = 0; j < ingredientes.size(); j++) {
+                int idAtual = ingredientes[j].getId();
+                bool count = false;
+                
+                
+                for (int k = 0; k < idsContados.size(); k++) {
+                    if (idsContados[k] == idAtual) {
+                        count = true;
+                        break; 
+                    }
+                }
+    
+                if (count == false && idAtual >= 0) {
+                    idsContados.push_back(idAtual);
+                    totalIngredientes++;
+                }
+            }
+        }
 			
 
 		for (int i = 0; i < totalReceitas; i++) {
 			string tipo = receitas[i]->getTipo();
 			
-		
+			totalEtapas += receitas[i]->getEtapas().size();
+
 			if (tipo == "Quente") totalQuentes++;
 			else if (tipo == "Gelada") totalGeladas++;
 			else if (tipo == "Mista") totalMistas++;
 
 		
 
-
-			
 			int tempoAtual = receitas[i]->calcularTempo();
 			tempoTotal += tempoAtual;
 			
@@ -528,7 +540,20 @@ cout << "\n";
 			}
 		}
 
+		for (int i = 0; i < totalReceitas; i++) {
+			string tipo = receitas[i]->getTipo();
+		
+
+			int tempoAtual = receitas[i]->calcularTempo();
+			
+			if (tempoAtual < maiorTempo) {
+				menorTempo = tempoAtual;
+				receitaMaisRapida = receitas[i]->getNome();
+			}
+		}
+
 		float tempoMedio = (float)tempoTotal / totalReceitas;
+		float etapasMedias = (float)totalEtapas /totalReceitas;
 
 		
 		cout << "\n---------------------RELATORIO -----------------------" << endl;
@@ -537,12 +562,19 @@ cout << "\n";
 		cout << "  - Receitas Geladas         : " << totalGeladas << endl;
 		cout << "  - Receitas Mistas         : " << totalMistas << endl;
 		cout << "-----------------------------------------------------" << endl;
-		cout << "Total Geral de Ingredientes   : " << totalIngredientes << endl;
+		cout << "Total de Ingredientes         : " << totalIngredientes << endl;
 		cout << "Tempo Medio de Preparo        : " << tempoMedio << " minutos" << endl;
+		cout << "Quantidade Media de Etapas    : " << etapasMedias << endl;
 		if (maiorTempo > 0) {
 			cout << "Receita Mais Demorada         : " << receitaMaisDemorada 
 			     << " (" << maiorTempo << " min)" << endl;
 		}
+		if (menorTempo > 0) {
+			cout << "Receita Mais Rápida           : " << receitaMaisRapida 
+			     << " (" << menorTempo << " min)" << endl;
+		}
+		cout << "-----------------Receitas Disponíveis----------------" << endl;
+		listarReceitas();
 		cout << "-----------------------------------------------------" << endl;
 		
 	}
