@@ -152,11 +152,7 @@ public:
 
 			cout << "Quais são as etapas necessárias para finalizar a receita?" << endl;
 			adicionarEtapasReceita(etapasTemporarias);
-			if (!etapasTemporarias.empty()) {
-    		indentificador = etapasTemporarias.back().getRecipiente() + "~";
-    		etapasTemporarias.back().setRecipiente(indentificador);
-			}
-
+			
 			a = shared_ptr<Receita>(new ReceitaQuente(nome, lugarQuente, intensidade, tempoQuente));
 		
 		
@@ -183,11 +179,6 @@ public:
 			cin >> tempoCongelamento;
 			cout << "Quais são as etapas necessárias para finalizar a receita?" << endl;
 			adicionarEtapasReceita(etapasTemporarias);
-			if (!etapasTemporarias.empty()) {
-    		indentificador = etapasTemporarias.back().getRecipiente() + "~";
-    		etapasTemporarias.back().setRecipiente(indentificador);
-			}
-		
 
 				a = shared_ptr<Receita>(new ReceitaGelada(nome, lugarGelado, tempoCongelamento));
 
@@ -230,6 +221,7 @@ public:
 					}
 					if (opcoes == 1){ 
 					cout << "Quais são as etapas necessárias antes do próximo processo térmico";
+					adicionarEtapasReceita(etapasTemporarias);
 					if (!etapasTemporarias.empty()) {
     				indentificador = etapasTemporarias.back().getRecipiente() + "~";
     				etapasTemporarias.back().setRecipiente(indentificador);
@@ -245,10 +237,6 @@ public:
 
 				cout << "Quais são as etapas necessárias para finalizar a receita?" << endl;
 				adicionarEtapasReceita(etapasTemporarias);
-				if (!etapasTemporarias.empty()) {
-    			indentificador = etapasTemporarias.back().getRecipiente() + "~";
-    			etapasTemporarias.back().setRecipiente(indentificador);
-				}
 
 				a = shared_ptr<Receita>(new ReceitaMista(nome, lugarGelado, lugarQuente, intensidade, tempoQuente, tempoCongelamento));
 					break;
@@ -330,7 +318,7 @@ public:
 			cin >> o;
 			if (o=='1'){
 				for(int i = 0; i < receitaEncontrada->getIngredientes().size(); i++){
-				cout << receitaEncontrada->getIngredientes()[i].getUnidade() << " de " << receitaEncontrada->getIngredientes()[i].getNome()<<"\n"<<endl;
+				cout << receitaEncontrada->getIngredientes()[i].getNome()<<"\n"<<endl;
 		}
 				adicionarIngredientesReceita(ingredientesTemporarios);
 				for (i = 0; i < ingredientesTemporarios.size(); i++){
@@ -343,7 +331,7 @@ public:
 				}
 			}else if(o=='2'){
 				for(int i = 0; i < receitaEncontrada->getIngredientes().size(); i++){
-				cout << receitaEncontrada->getIngredientes()[i].getUnidade() << " de " << receitaEncontrada->getIngredientes()[i].getNome()<<endl;
+				cout <<receitaEncontrada->getIngredientes()[i].getNome()<<endl;
 		}
 				cout << "\nDigite o nome do ingrediente que quer excluir: ";
 				getline (cin >> ws, novoNome);
@@ -512,12 +500,12 @@ public:
                 cin >> c;
                 
                 if (c == 's' || c == 'S') {
-                    indentificador1 = Etapas[b].getRecipiente();
+                    indentificador1 = Etapas[b-1].getRecipiente();
                     
                   
                     if (!indentificador1.empty() && indentificador1.back() == '~') {
                         indentificador1.pop_back();
-                        Etapas[b].setRecipiente(indentificador1);
+                        Etapas[b-1].setRecipiente(indentificador1);
                     }
                     
                     indentificador = etapa.getRecipiente() + "~";

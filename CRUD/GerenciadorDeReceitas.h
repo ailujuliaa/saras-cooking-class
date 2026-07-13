@@ -392,8 +392,9 @@ cout << "\n";
 	bool adicionarIngrediente(string nome, Ingrediente ingrediente) {
 		shared_ptr<Receita> receita = buscarPorNome(nome);
 		if (receita == nullptr) return false;
+		
 
-		ingrediente.setId(gerarProximoIdIngrediente());
+		ingrediente.setId(gerarProximoIdIngrediente(ingrediente));
 		receita->adicionarIngrediente(ingrediente); 
 		return true;
 
@@ -469,13 +470,16 @@ cout << "\n";
 		return maiorId + 1;	
 	}
 
-	int gerarProximoIdIngrediente() {
+	int gerarProximoIdIngrediente(Ingrediente ingrediente) {
 		int maiorId = 0;
 		for (int i = 0; i < receitas.size(); i++) {
 			vector<Ingrediente>& ingredientes = receitas[i]->getIngredientes();
 			for (int j = 0; j < ingredientes.size(); j++) {
 				if (ingredientes[j].getId() > maiorId) {
 					maiorId = ingredientes[j].getId();
+				}
+				if (ingredientes[j].getNome()==ingrediente.getNome()){
+					return ingrediente.getId();
 				}
 			}
 		}

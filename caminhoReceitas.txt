@@ -3,10 +3,18 @@ Mista;bolo de murango;95;levar a geladeira ate endurecer;Levar ao forno~ ou ate 
 bater tudo:9:liquidificador,a:0:a~,b:1:b~,reserve:0:pote,passar para a forma:10:.~,passar geleia:5:faca,untar a:10:forma
 
 Gelada;sorvetinho;70;freezer ate endurecer;60
-5:leite:3 litros;8:murango:4
-bater:10:no liquidificador~,servir:0:potinho~
+8:murango:4
+bater:10:no liquidificador~
 
 Quente;pamonha;55;Levar ao forno ~ou ate dourar;300;50
 7:milho:3
 descasque:5:pote~,sse:0:pote~
+
+Mista;pudim;86;geladeira ate esfriar;Levar ao forno a ~ate firmar;178;46;10
+9:leite:3
+misturar:7:fouet,passar :4:forma~,retire do forno e reserve:10:forma,servir:0:pote~,ai:9:oi
+
+Gelada;aaa;20;sssss;4
+10:aaa:3
+ccc:8:fff,qqqq:4:aaaa~,dddd:4:ggg~
 
