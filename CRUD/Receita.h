@@ -17,15 +17,12 @@ protected:
 	int tempoPreparo;
 	vector<Ingrediente> ingrediente;
 	vector<Etapa> etapa;
-	vector<shared_ptr<Receita>> componentes;
 
 public:
-	Receita(): nome("") {
-
+	Receita(): nome(""){ 
 	}
 
 	Receita(string nome) : nome(nome) {
-
 	}
 
 	virtual ~Receita() {
@@ -39,7 +36,6 @@ public:
 		return id; 
 	}
 
-
 	string getNome() const { 
 		return nome; 
 	}
@@ -50,7 +46,6 @@ public:
 	vector<Ingrediente>& getIngredientes() { 
 		return ingrediente; 
 	}
-
 	
 	void adicionarIngrediente(Ingrediente novoIngrediente) {
 		ingrediente.push_back(novoIngrediente);
@@ -67,8 +62,6 @@ public:
 		return false;
 	}
 
-	
-
 	vector<Etapa>& getEtapas() { 
 		return etapa; 
 	}
@@ -84,14 +77,6 @@ public:
             return true;
         }
 		return false;
-	}
- 
-	vector<shared_ptr<Receita>>& getComponentes() { 
-		return componentes; 
-	}
- 
-	void adicionarComponente(shared_ptr<Receita> componente) {
-		componentes.push_back(componente);
 	}
 
 	int calcularTempoEtapas() const {

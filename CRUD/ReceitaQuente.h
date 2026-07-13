@@ -12,11 +12,9 @@ private:
 
 public:
     ReceitaQuente() : Receita(), lugar(""),  intensidade(""), tempo(0) {
-
     }
 
 	ReceitaQuente (string nome, string lugar, string intensidade, int tempo): Receita (nome), lugar (lugar), intensidade(intensidade), tempo(tempo) {
-
     }
 
     string getLugarQuente () override {
@@ -37,6 +35,7 @@ public:
     int getTempo() override { 
         return tempo; 
     }
+
     void setTempo(int tempo) { 
         this->tempo = tempo; 
     }
@@ -44,6 +43,7 @@ public:
     int calcularTempo() override {
         return  tempo + calcularTempoEtapas();
     }
+    
     string getTipo() const override {
         return "Quente";
     }

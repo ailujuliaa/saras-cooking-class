@@ -1,4 +1,3 @@
-#pragma once
 #ifndef INGREDIENTE_H
 #define INGREDIENTE_H
 
@@ -11,14 +10,13 @@ class Ingrediente
 private:
 	int id;
 	string nome;
-	//float quantidade;
-	string unidade;
+	string quantidade;
 
 public:
-	Ingrediente():id(0), nome(""), unidade("") {
+	Ingrediente():id(0), nome(""), quantidade("") {
 	}
 
-	Ingrediente(int id, string nome, string unidade) : id(id), nome(nome), unidade(unidade) {
+	Ingrediente(int id, string nome, string quantidade) : id(id), nome(nome), quantidade(quantidade) {
 	}
 
 	int getId() const { 
@@ -35,18 +33,11 @@ public:
 		this->nome = nome; 
 	}
 
-	/*float getQuantidade() const { 
+	string getQuantidade() const { 
 		return quantidade; 
 	}
-	void setQuantidade(float quantidade) { 
+	void setQuantidade(string quantidade) { 
 		this->quantidade = quantidade; 
-	}*/
-
-	string getUnidade() const { 
-		return unidade; 
-	}
-	void setUnidade(string unidade) { 
-		this->unidade = unidade; 
 	}
 };
 #endif

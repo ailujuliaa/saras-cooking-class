@@ -54,8 +54,7 @@ public:
 				if (j > 0) {
 					arquivo << ";";
 				}
-				arquivo << ingredientes[j].getId() << ":" << ingredientes[j].getNome() << ":"
-						<< /*ingredientes[j].getQuantidade() << ":" << */ ingredientes[j].getUnidade();
+				arquivo << ingredientes[j].getId() << ":" << ingredientes[j].getNome() << ":" << ingredientes[j].getQuantidade();
 			}
 
 			arquivo << "\n";
@@ -135,10 +134,8 @@ public:
 
 				getline(dadosIng, idStr, ':');
 				getline(dadosIng, nomeIng, ':');
-				//getline(dadosIng, qtdStr, ':');
 				getline(dadosIng, unidade, ':');
 				int id = stoi(idStr);
-				//float qtd = stof(qtdStr);
 
 				Ingrediente ingrediente(id, nomeIng, unidade);
 				receita->adicionarIngrediente(ingrediente);
@@ -172,21 +169,29 @@ public:
 
 	void listarReceitas(bool a = false){
 		if (receitas.empty()){
-        cout << "Nenhuma receita foi carregada do arquivo." << endl;
-        return;
-    	}
-    	for (int i = 0; i < receitas.size(); i++) {
+			cout << "\n╔══════════════════════════════════════════════╗\n";
+			cout << "║  😕 Nenhuma receita foi carregada do arquivo. ║\n";
+			cout << "╚══════════════════════════════════════════════╝\n";
+			return;
+		}
+
+		if (a) {
+			cout << "\n╔══════════════════════════════════════════════╗\n";
+			cout << "║       📚 RECEITAS DISPONÍVEIS                 ║\n";
+			cout << "╚══════════════════════════════════════════════╝\n";
+		}
+
+		for (int i = 0; i < receitas.size(); i++) {
 			if (a){
-			cout << "---------- Receitas Disponíveis -----------" << endl;
-        	cout << i + 1 << " - ";
-			printarReceita(receitas[i]);
+				cout << "\n" << i + 1 << " - ";
+				printarReceita(receitas[i]);
 			}
 			else {
-				cout << i + 1 << " - " << receitas[i]->getNome() << "\n";
+				cout << "  " << i + 1 << " - 🍰 " << receitas[i]->getNome() << "\n";
 			}
-    	}
+		}
 	}
-		
+			
 	bool criarReceita(shared_ptr<Receita> receita) {
 		receita->setId(gerarProximoId());
 		receitas.push_back(receita);
@@ -202,10 +207,6 @@ public:
     return nullptr;
 	}
 
-	/*vector<shared_ptr<Receita>> listarTodas() {
-		return receitas; 
-	}*/
-
 	vector<shared_ptr<Receita>> listarPorNome(string nome) { 
 		vector<shared_ptr<Receita>> resultado;
 		for (int i = 0; i < receitas.size(); i++) {
@@ -219,188 +220,146 @@ public:
 		int j = 0;
 		bool p = 0;
 		string lugarQuente, lugarquente = "", descricao = "";
-		cout << receita->getNome() << "\n\n" << receita->getTipo() 
-		<< "\nTempo de Preparo: " << receita->calcularTempo() << "minutos\n\nIgredientes:\n" <<endl;
+
+		cout << "\n╔══════════════════════════════════════════════╗\n";
+		cout << "║  🍰 " << receita->getNome() << "\n";
+		cout << "╚══════════════════════════════════════════════╝\n";
+		cout << "🏷️ Tipo: " << receita->getTipo() << "\n";
+		cout << "⏳ Tempo de Preparo: " << receita->calcularTempo() << " minutos\n";
+
+		cout << "\n🥕 INGREDIENTES:\n";
 		for(int i = 0; i < receita->getIngredientes().size(); i++){
-			cout << receita->getIngredientes()[i].getUnidade() << " de " << receita->getIngredientes()[i].getNome()<<endl;
+			cout << "  • " << receita->getIngredientes()[i].getQuantidade() << " de " << receita->getIngredientes()[i].getNome() << "\n";
 		}
 
-		cout << "\nEtapas:\n" << endl;
-
+		cout << "\n📋 MODO DE PREPARO:\n";
 		while (p == 0 && j < receita->getEtapas().size()) {
+			string recipienteAtual = receita->getEtapas()[j].getRecipiente();
 
-   			 string recipienteAtual = receita->getEtapas()[j].getRecipiente();
+			if (!recipienteAtual.empty() && recipienteAtual.back() == '~') {
+				recipienteAtual.pop_back();
+				p = true;
+			}
 
-    		if (!recipienteAtual.empty() && recipienteAtual.back() == '~') {
-        	recipienteAtual.pop_back();
-        	p = true;
-    	}
+			cout << "  " << (j+1) << ". " << receita->getEtapas()[j].getAcao() << " em um(a) " << recipienteAtual << " por " << receita->getEtapas()[j].getTempo() << " minutos\n";
 
-    	cout << "*" << receita->getEtapas()[j].getAcao()
-         << " em um(a) " << recipienteAtual
-         << " por " << receita->getEtapas()[j].getTempo()
-         << " minutos\n";
+			j++;
+			if (p) break;
+		}	
 
-    	j++;
-
-    	if (p)
-        break;
-}
-
-	
 		if (receita->getTipo() == "Quente") {
 			lugarQuente = receita->getLugarQuente();
 			size_t posicao = lugarQuente.find("~");
 			if (posicao != string::npos) {
 
-    		lugarquente = lugarQuente.substr(0, posicao); 
-    
-    		descricao = lugarQuente.substr(posicao + 1);
+			lugarquente = lugarQuente.substr(0, posicao); 
+			descricao = lugarQuente.substr(posicao + 1);
 
-			cout << "*" << lugarquente <<" "<< receita->getIntensidade() 
-			<< " por aproximadamente " << receita->getTempo() << " minutos "<< descricao << endl;
-
+			cout << "  🔥 " << lugarquente <<" "<< receita->getIntensidade() << " por aproximadamente " << receita->getTempo() << " minutos "<< descricao << "\n";
 			}
 		}
-			else if (receita->getTipo() == "Gelada") {
-				cout <<"*"<< "Levar à(o) " << receita->getLugarGelado() << " por aproximadamente " 
-			    << receita->getTempoCongelamento() <<" minutos"<< endl;
-
-			}
+		
+		else if (receita->getTipo() == "Gelada") {
+			cout << "  ❄️ " << "Levar à(o) " << receita->getLugarGelado() << " por aproximadamente " << receita->getTempoCongelamento() <<" minutos\n";
+		}
 			
-			else if (receita->getTipo() == "Mista") {
-			
+		else if (receita->getTipo() == "Mista") {
 			lugarQuente = receita->getLugarQuente();
 			size_t posicao = lugarQuente.find("~");
 			if (posicao != string::npos) {
-    
-
-    		lugarquente = lugarQuente.substr(0, posicao); 
-    
-    		descricao = lugarQuente.substr(posicao + 1);
+					lugarquente = lugarQuente.substr(0, posicao); 
+				descricao = lugarQuente.substr(posicao + 1);
 			}
 			
-				string ordem = receita->getLugarGelado();
-				if (ordem.back() == '~'){
-					ordem.pop_back();
-					cout << "*" << "Levar à(o)" << ordem << " por aproximadamente " 
-					<< receita->getTempoCongelamento() <<" minutos"<<  endl;
-					
-					p = false;
-					while (p == 0 && j < receita->getEtapas().size()) {
+			string ordem = receita->getLugarGelado();
+			if (ordem.back() == '~'){
+				ordem.pop_back();
+				cout << "  ❄️ " << "Levar à(o)" << ordem << " por aproximadamente " << receita->getTempoCongelamento() <<" minutos\n";
+				p = false;
+				while (p == 0 && j < receita->getEtapas().size()) {
+						string recipienteAtual = receita->getEtapas()[j].getRecipiente();
 
-   			 		string recipienteAtual = receita->getEtapas()[j].getRecipiente();
+					if (!recipienteAtual.empty() && recipienteAtual.back() == '~') {
+							recipienteAtual.pop_back();
+							p = true;
+					}
 
-    				if (!recipienteAtual.empty() && recipienteAtual.back() == '~') {
-        				recipienteAtual.pop_back();
-        				p = true;
-    				}
+					cout << "  " << (j+1) << ". " << receita->getEtapas()[j].getAcao() << " em um(a) " << recipienteAtual << " por " << receita->getEtapas()[j].getTempo() << " minutos\n";
+					j++;
 
-    				cout << "*" << receita->getEtapas()[j].getAcao()
-         				<< " em um(a) " << recipienteAtual
-         				<< " por " << receita->getEtapas()[j].getTempo()
-         				<< " minutos\n";
+				if (p) break;
+				}
 
-    					j++;
-
-    					if (p)
-        					break;
-						}
-
-					lugarQuente = receita->getLugarQuente();
-					size_t posicao = lugarQuente.find("~");
-					if (posicao != string::npos) {
-
-    				lugarquente = lugarQuente.substr(0, posicao); 
-    
-    				descricao = lugarQuente.substr(posicao + 1);
-
-					cout <<"*"<< lugarquente << receita->getIntensidade() 
-					<< " por aproximadamente " << receita->getTempo() << " minutos "<< descricao << endl;
-			}
+				lugarQuente = receita->getLugarQuente();
+				size_t posicao = lugarQuente.find("~");
+				if (posicao != string::npos) {
+					lugarquente = lugarQuente.substr(0, posicao); 
+					descricao = lugarQuente.substr(posicao + 1);
+					cout << "  🔥 " << lugarquente << receita->getIntensidade() << " por aproximadamente " << receita->getTempo() << " minutos "<< descricao << "\n";
+				}
 			}
 			else {
 				lugarQuente = receita->getLugarQuente();
 				size_t posicao = lugarQuente.find("~");
 				if (posicao != string::npos) {
+					lugarquente = lugarQuente.substr(0, posicao); 
+					descricao = lugarQuente.substr(posicao + 1);
 
-    			lugarquente = lugarQuente.substr(0, posicao); 
-    
-    			descricao = lugarQuente.substr(posicao + 1);
+					cout << "  🔥 " << lugarquente <<" " << receita->getIntensidade() << " por aproximadamente " << receita->getTempo() << " minutos "<< descricao << "\n";
 
-				cout<< "*" << lugarquente <<" " << receita->getIntensidade() 
-				<< " por aproximadamente " << receita->getTempo() << " minutos "<< descricao << endl;
+					p = false;
+					while (p == 0 && j < receita->getEtapas().size()) {
+						string recipienteAtual = receita->getEtapas()[j].getRecipiente();
+						if (!recipienteAtual.empty() && recipienteAtual.back() == '~') {
+							recipienteAtual.pop_back();
+							p = true;
+						}
 
-				p = false;
-				while (p == 0 && j < receita->getEtapas().size()) {
+					cout << "  " << (j+1) << ". " << receita->getEtapas()[j].getAcao() << " em um(a) " << recipienteAtual << " por " << receita->getEtapas()[j].getTempo() << " minutos\n";
+					j++;
 
-   			 string recipienteAtual = receita->getEtapas()[j].getRecipiente();
+					if (p) break;
+					}
 
-    		if (!recipienteAtual.empty() && recipienteAtual.back() == '~') {
-        	recipienteAtual.pop_back();
-        	p = true;
-    	}
-
-    		cout << "*" << receita->getEtapas()[j].getAcao()
-         		<< " em um(a) " << recipienteAtual
-         		<< " por " << receita->getEtapas()[j].getTempo()
-         		<< " minutos\n";
-
-    			j++;
-
-    			if (p)
-        			break;
-}
-
-		cout << "Levar à(o)" << ordem << " por aproximadamente " 
-					<< receita->getTempoCongelamento() <<  endl;
+				cout << "  ❄️ " << "Levar à(o)" << ordem << " por aproximadamente " << receita->getTempoCongelamento() << " minutos\n";
+				}
 			}
-		}
 		
-}
+		}
 		p = false;
 		while (p == 0 && j < receita->getEtapas().size()) {
+			string recipienteAtual = receita->getEtapas()[j].getRecipiente();
 
-   			 string recipienteAtual = receita->getEtapas()[j].getRecipiente();
+			if (!recipienteAtual.empty() && recipienteAtual.back() == '~') {
+				recipienteAtual.pop_back();
+				p = true;
+		}
 
-    		if (!recipienteAtual.empty() && recipienteAtual.back() == '~') {
-        	recipienteAtual.pop_back();
-        	p = true;
-    	}
+		cout << "  " << (j+1) << ". " << receita->getEtapas()[j].getAcao() << " em um(a) " << recipienteAtual << " por " << receita->getEtapas()[j].getTempo() << " minutos\n";
+		j++;
 
-    	cout << "*" << receita->getEtapas()[j].getAcao()
-         << " em um(a) " << recipienteAtual
-         << " por " << receita->getEtapas()[j].getTempo()
-         << " minutos\n";
-
-    	j++;
-
-    	if (p)
-        break;
-}
-cout << "\n -----------------------------------------------------" << endl;
-}
+		if (p) break;
+		}
+		cout << "\n───────────────────────────────────────────────\n";
+	}
 
 	bool atualizarReceita(shared_ptr<Receita> a, shared_ptr<Receita> novaReceita) {
 		shared_ptr<Receita> receita = a;
 		
 		receita->setNome(novaReceita->getNome());
 		return true;
-
 	}
 
 	bool adicionarIngrediente(string nome, Ingrediente ingrediente) {
 		shared_ptr<Receita> receita = buscarPorNome(nome);
 		if (receita == nullptr) return false;
 		
-
 		ingrediente.setId(gerarProximoIdIngrediente(ingrediente));
 		receita->adicionarIngrediente(ingrediente); 
 		return true;
-
 	}
 
-	bool removerIngrediente(string nome, int idIngrediente) {//por nome
+	bool removerIngrediente(string nome, int idIngrediente) {
 		shared_ptr<Receita> receita = buscarPorNome(nome);
 		if (receita == nullptr) return false;
 
@@ -415,8 +374,7 @@ cout << "\n -----------------------------------------------------" << endl;
 			if (receitas[i] == receita) {
 				receitas.erase(receitas.begin() + i);
 				return true;
-			}
-			
+			}	
 		}
 	return false;
 	}
@@ -436,29 +394,6 @@ cout << "\n -----------------------------------------------------" << endl;
 		receita->removerEtapa(num);
 		return true;
 	}
-
-	bool adicionarComponente(string nomePrincipal, string nomeComponente) {
-		if (nomePrincipal == nomeComponente) return false;
-
-		shared_ptr<Receita> principal = buscarPorNome(nomePrincipal);
-		shared_ptr<Receita> componente = buscarPorNome(nomeComponente);
-
-		if (principal == nullptr || componente == nullptr) return false;
-
-		if (formaCiclo(componente, nomePrincipal)) return false;
-
-		principal->adicionarComponente(componente);
-		return true;
-	}
-	
-	bool formaCiclo(shared_ptr<Receita> receita, string nomeAlvo) {
-    vector<shared_ptr<Receita>>& componentes = receita->getComponentes();
-    for (int i = 0; i < componentes.size(); i++) {
-        if (componentes[i]->getNome() == nomeAlvo) return true;
-        if (formaCiclo(componentes[i], nomeAlvo)) return true;
-    }
-    return false;
-}
 
 	int gerarProximoId() {
 		int maiorId = 0;
@@ -487,49 +422,45 @@ cout << "\n -----------------------------------------------------" << endl;
 	}
 	void exibirRelatorioSistema() {
 		if (receitas.empty()) {
-			cout << "\n--- RELATORIO DO SISTEMA ---" << endl;
-			cout << "Nenhuma receita cadastrada no momento." << endl;
+			cout << "\n╔══════════════════════════════════════════════╗\n";
+			cout << "║          📊 RELATÓRIO DO SISTEMA              ║\n";
+			cout << "╠══════════════════════════════════════════════╣\n";
+			cout << "║  😕 Nenhuma receita cadastrada no momento.    ║\n";
+			cout << "╚══════════════════════════════════════════════╝\n";
 			return;
 		}
 
 		int totalReceitas = receitas.size(), totalQuentes = 0, totalGeladas = 0, totalMistas = 0, totalIngredientes = 0, tempoTotal = 0, maiorTempo = 0, maiorId=0, menorTempo, totalEtapas = 0;
 		string receitaMaisDemorada = "", receitaMaisRapida = "";
+		vector<int> idsContados; 
+		for (int i = 0; i < totalReceitas; i++) {
+			vector<Ingrediente>& ingredientes = receitas[i]->getIngredientes();
 
-        vector<int> idsContados; 
+			for (int j = 0; j < ingredientes.size(); j++) {
+				int idAtual = ingredientes[j].getId();
+				bool count = false;
+				
+				for (int k = 0; k < idsContados.size(); k++) {
+					if (idsContados[k] == idAtual) {
+						count = true;
+						break; 
+					}
+				}
 
-        for (int i = 0; i < totalReceitas; i++) {
-            vector<Ingrediente>& ingredientes = receitas[i]->getIngredientes();
-            
-            for (int j = 0; j < ingredientes.size(); j++) {
-                int idAtual = ingredientes[j].getId();
-                bool count = false;
-                
-                
-                for (int k = 0; k < idsContados.size(); k++) {
-                    if (idsContados[k] == idAtual) {
-                        count = true;
-                        break; 
-                    }
-                }
-    
-                if (count == false && idAtual >= 0) {
-                    idsContados.push_back(idAtual);
-                    totalIngredientes++;
-                }
-            }
-        }
+				if (count == false && idAtual >= 0) {
+					idsContados.push_back(idAtual);
+					totalIngredientes++;
+				}
+			}
+		}
 			
-
 		for (int i = 0; i < totalReceitas; i++) {
 			string tipo = receitas[i]->getTipo();
-			
 			totalEtapas += receitas[i]->getEtapas().size();
 
 			if (tipo == "Quente") totalQuentes++;
 			else if (tipo == "Gelada") totalGeladas++;
 			else if (tipo == "Mista") totalMistas++;
-
-		
 
 			int tempoAtual = receitas[i]->calcularTempo();
 			tempoTotal += tempoAtual;
@@ -542,8 +473,6 @@ cout << "\n -----------------------------------------------------" << endl;
 
 		for (int i = 0; i < totalReceitas; i++) {
 			string tipo = receitas[i]->getTipo();
-		
-
 			int tempoAtual = receitas[i]->calcularTempo();
 			
 			if (tempoAtual < maiorTempo) {
@@ -554,30 +483,27 @@ cout << "\n -----------------------------------------------------" << endl;
 
 		float tempoMedio = (float)tempoTotal / totalReceitas;
 		float etapasMedias = (float)totalEtapas /totalReceitas;
-
 		
-		cout << "\n---------------------RELATORIO -----------------------" << endl;
-		cout << "Total de Receitas Cadastradas : " << totalReceitas << endl;
-		cout << "  - Receitas Quentes         : " << totalQuentes << endl;
-		cout << "  - Receitas Geladas         : " << totalGeladas << endl;
-		cout << "  - Receitas Mistas         : " << totalMistas << endl;
-		cout << "-----------------------------------------------------" << endl;
-		cout << "Total de Ingredientes         : " << totalIngredientes << endl;
-		cout << "Tempo Medio de Preparo        : " << tempoMedio << " minutos" << endl;
-		cout << "Quantidade Media de Etapas    : " << etapasMedias << endl;
+		cout << "\n╔══════════════════════════════════════════════╗\n";
+		cout << "║          📊 RELATÓRIO DO SISTEMA              ║\n";
+		cout << "╠══════════════════════════════════════════════╣\n";
+		cout << "🍰 Total de Receitas Cadastradas : " << totalReceitas << "\n";
+		cout << "   🔥 Receitas Quentes           : " << totalQuentes << "\n";
+		cout << "   ❄️ Receitas Geladas           : " << totalGeladas << "\n";
+		cout << "   🌗 Receitas Mistas            : " << totalMistas << "\n";
+		cout << "───────────────────────────────────────────────\n";
+		cout << "🥕 Total de Ingredientes         : " << totalIngredientes << "\n";
+		cout << "⏳ Tempo Médio de Preparo        : " << tempoMedio << " minutos\n";
+		cout << "📋 Quantidade Média de Etapas    : " << etapasMedias << "\n";
 		if (maiorTempo > 0) {
-			cout << "Receita Mais Demorada         : " << receitaMaisDemorada 
-			     << " (" << maiorTempo << " min)" << endl;
+			cout << "🐢 Receita Mais Demorada         : " << receitaMaisDemorada  << " (" << maiorTempo << " min)\n";
 		}
 		if (menorTempo > 0) {
-			cout << "Receita Mais Rápida           : " << receitaMaisRapida 
-			     << " (" << menorTempo << " min)" << endl;
+			cout << "⚡ Receita Mais Rápida           : " << receitaMaisRapida << " (" << menorTempo << " min)\n";
 		}
-		cout << "-----------------Receitas Disponíveis----------------" << endl;
+		cout << "╚══════════════════════════════════════════════╝\n";
+		cout << "\n📚 RECEITAS DISPONÍVEIS:\n";
 		listarReceitas();
-		cout << "-----------------------------------------------------" << endl;
-		
 	}
-	
 };
 #endif

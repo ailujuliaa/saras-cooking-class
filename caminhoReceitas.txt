@@ -1,16 +1,8 @@
-Mista;bolo de murango;95;levar a geladeira ate endurecer;Levar ao forno~ ou ate dourar;180;30;30
+Quente;Bolo de Chocolate;63;Levar ao forno a ~até dourar;180;40
+1:Farinha de trigo:2 xicaras;2:Açucar:1 xicara;3:Chocolate em pó:3 colheres de sopa;4:Ovos:3 unidades
+Misturar os ingredientes secos:5:tigela grande,Bater os ovos e adicionar à mistura:3:tigela grande~,deixar esfriar:15:forma
 
-bater tudo:9:liquidificador,a:0:a~,b:1:b~,reserve:0:pote,passar para a forma:10:.~,passar geleia:5:faca,untar a:10:forma
-
-Gelada;sorvete;70;freezer ate endurecer;60
-8:murango:4;0:leite:3;0:leite:n
-bater:10:no liquidificador~
-
-Quente;pamonha;55;Levar ao forno ~ou ate dourar;300;50
-7:milho:3
-descasque:5:pote~,sse:0:pote~
-
-Mista;pudim;86;geladeira ate esfriar;Levar ao forno a ~ate firmar;178;46;10
-9:leite:3
-misturar:7:fouet,passar :4:forma~,retire do forno e reserve:10:forma,servir:0:pote~,ai:9:oi
+Gelada;Pudim;252;geladeira coberto com papel filme;240
+5:Leite Condensado:1 lata;6:Leite:2 xicaras;7:Ovos :3 unidades
+Bater todos os ingredientes :5:liquidificador,Despejar na forma com caramelo:2:forma~,Desenformar:5:prato
 

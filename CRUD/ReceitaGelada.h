@@ -23,7 +23,6 @@ public:
         this->lugar = lugar; 
     }
 
-
     int getTempoCongelamento() override { 
         return tempoCongelamento; 
     }
@@ -46,6 +45,7 @@ public:
 	string getTipo() const override {
         return "Gelada";
     }
+    
     string getLugarQuente() override {
         return "";
     }
