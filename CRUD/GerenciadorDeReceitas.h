@@ -6,6 +6,8 @@
 #include <memory>
 #include <fstream>
 #include <sstream>
+#include <iomanip> 
+
 
 #include "Receita.h"
 #include "ReceitaQuente.h"
@@ -177,7 +179,7 @@ public:
 
 		if (a) {
 			cout << "\n╔══════════════════════════════════════════════╗\n";
-			cout << "║       📚 RECEITAS DISPONÍVEIS                 ║\n";
+			cout << "║       📚 RECEITAS DISPONÍVEIS                ║\n";
 			cout << "╚══════════════════════════════════════════════╝\n";
 		}
 
@@ -185,6 +187,7 @@ public:
 			if (a){
 				cout << "\n" << i + 1 << " - ";
 				printarReceita(receitas[i]);
+				cout << "\n";
 			}
 			else {
 				cout << "  " << i + 1 << " - 🍰 " << receitas[i]->getNome() << "\n";
@@ -420,12 +423,13 @@ public:
 		}
 		return maiorId + 1;
 	}
+	
 	void exibirRelatorioSistema() {
 		if (receitas.empty()) {
 			cout << "\n╔══════════════════════════════════════════════╗\n";
-			cout << "║          📊 RELATÓRIO DO SISTEMA              ║\n";
+			cout << "║          📊 RELATÓRIO DO SISTEMA             ║\n";
 			cout << "╠══════════════════════════════════════════════╣\n";
-			cout << "║  😕 Nenhuma receita cadastrada no momento.    ║\n";
+			cout << "║  😕 Nenhuma receita cadastrada no momento.   ║\n";
 			cout << "╚══════════════════════════════════════════════╝\n";
 			return;
 		}
@@ -485,15 +489,17 @@ public:
 		float etapasMedias = (float)totalEtapas /totalReceitas;
 		
 		cout << "\n╔══════════════════════════════════════════════╗\n";
-		cout << "║          📊 RELATÓRIO DO SISTEMA              ║\n";
+		cout << "║          📊 RELATÓRIO DO SISTEMA             ║\n";
 		cout << "╠══════════════════════════════════════════════╣\n";
 		cout << "🍰 Total de Receitas Cadastradas : " << totalReceitas << "\n";
-		cout << "   🔥 Receitas Quentes           : " << totalQuentes << "\n";
-		cout << "   ❄️ Receitas Geladas           : " << totalGeladas << "\n";
-		cout << "   🌗 Receitas Mistas            : " << totalMistas << "\n";
-		cout << "───────────────────────────────────────────────\n";
+		cout << "🔥 Receitas Quentes              : " << totalQuentes << "\n";
+		cout << "❄️ Receitas Geladas               : " << totalGeladas << "\n";
+		cout << "🌗 Receitas Mistas               : " << totalMistas << "\n";
+		cout << "════════════════════════════════════════════════\n";
 		cout << "🥕 Total de Ingredientes         : " << totalIngredientes << "\n";
+		cout << fixed << setprecision(2);
 		cout << "⏳ Tempo Médio de Preparo        : " << tempoMedio << " minutos\n";
+		cout << fixed << setprecision(1);
 		cout << "📋 Quantidade Média de Etapas    : " << etapasMedias << "\n";
 		if (maiorTempo > 0) {
 			cout << "🐢 Receita Mais Demorada         : " << receitaMaisDemorada  << " (" << maiorTempo << " min)\n";

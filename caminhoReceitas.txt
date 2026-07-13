@@ -3,6 +3,10 @@ Quente;Bolo de Chocolate;63;Levar ao forno a ~até dourar;180;40
 Misturar os ingredientes secos:5:tigela grande,Bater os ovos e adicionar à mistura:3:tigela grande~,deixar esfriar:15:forma
 
 Gelada;Pudim;252;geladeira coberto com papel filme;240
-5:Leite Condensado:1 lata;6:Leite:2 xicaras;7:Ovos :3 unidades
+5:Leite Condensado:1 lata;6:Leite:2 xicaras;4:Ovos:3 unidades
 Bater todos os ingredientes :5:liquidificador,Despejar na forma com caramelo:2:forma~,Desenformar:5:prato
+
+Quente;omelete;10;Levar ao forno a ~ate firmar;fogo baixo;10
+4:Ovos:1
+leve a:0:frigideira~,servir:0:prato
 
