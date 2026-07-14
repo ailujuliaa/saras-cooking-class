@@ -1,6 +1,8 @@
 #ifndef GERENCIADOR_DE_RECEITAS_H
 #define GERENCIADOR_DE_RECEITAS_H
 
+#include <algorithm> 
+#include <cctype>    
 #include <string>
 #include <vector>
 #include <memory>
@@ -201,14 +203,20 @@ public:
 		return true;
 	}
 
-	shared_ptr<Receita> buscarPorNome(string nome) {
-		for (int i = 0; i < receitas.size(); i++) {
-			if (receitas[i]->getNome() == nome) {
-				return receitas[i];
-			}
-		}
+	shared_ptr<Receita> buscarPorNome(string termo) {
+    string termoBusca = termo;
+    std::transform(termoBusca.begin(), termoBusca.end(), termoBusca.begin(), ::toupper);
+
+    for (const auto& receita : receitas) {
+        string nomeReceita = receita->getNome();
+        std::transform(nomeReceita.begin(), nomeReceita.end(), nomeReceita.begin(), ::toupper);
+
+        if (nomeReceita.find(termoBusca) != std::string::npos) {
+            return receita;
+        }
+    }
     return nullptr;
-	}
+}
 
 	vector<shared_ptr<Receita>> listarPorNome(string nome) { 
 		vector<shared_ptr<Receita>> resultado;
@@ -258,7 +266,7 @@ public:
 			lugarquente = lugarQuente.substr(0, posicao); 
 			descricao = lugarQuente.substr(posicao + 1);
 
-			cout << "  🔥 " << lugarquente <<" "<< receita->getIntensidade() << " por aproximadamente " << receita->getTempo() << " minutos "<< descricao << "\n";
+			cout << "  🔥 " << lugarquente <<" "<< receita->getIntensidade() << " por aproximadamente " << receita->getTempo() << " minutos \n "<< descricao << "\n";
 			}
 		}
 		

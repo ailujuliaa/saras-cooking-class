@@ -334,7 +334,7 @@ public:
 			cout << "║       📚 RECEITAS DISPONÍVEIS                ║\n";
 			cout << "╚══════════════════════════════════════════════╝\n";
 		gerenciador.listarReceitas();
-		cout << "Digite o nome exato da receita: ";
+		cout << "Digite o nome da receita: ";
         
         getline(cin >> ws, nomeBuscado); 
 
