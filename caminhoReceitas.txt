@@ -6,15 +6,21 @@ Gelada;Pudim;252;geladeira coberto com papel filme;240
 5:Leite Condensado:1 lata;6:Leite:2 xicaras;4:Ovos:3 unidades
 Bater todos os ingredientes :5:liquidificador,Despejar na forma com caramelo:2:forma~,Desenformar:5:prato
 
+<<<<<<< HEAD
 Quente;omelete;10;Levar ao forno a ~ate firmar;fogo baixo;10
 4:Ovos:2
 leve a:0:frigideira~,servir:0:prato
 
+=======
+>>>>>>> 75cdcb11f21f33c9b1341821e958ac94e3d39a98
 Mista;Pavê;211;geladeira;Levar ao fogão em ~mexer até engrossar;médio;8;180
 8:Biscoito:1 pacote;5:Leite Condensado:1 lata;3:Chocolate em pó:4 colheres de sopa;9:Creme de leite:1 caixa
 Fazer o creme de chocolate:8:panela~,montar as camadas de biscoito e creme:10:travessa~,decorar com raspas de chocolate:5:travessa
 
+<<<<<<< HEAD
 Quente;Bolo de Arroz;63;Levar ao forno a ~até dourar;180;40
 1:Farinha de trigo:2 xicaras;2:Açucar:1 xicara;3:Chocolate em pó:3 colheres de sopa;4:Ovos:3 unidades
 Misturar os ingredientes secos:5:tigela grande,Bater os ovos e adicionar à mistura:3:tigela grande~,deixar esfriar:15:forma
 
+=======
+>>>>>>> 75cdcb11f21f33c9b1341821e958ac94e3d39a98
